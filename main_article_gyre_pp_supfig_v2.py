@@ -19,10 +19,10 @@ plot_sf5  = False
 plot_sf6  = False
 plot_sf7  = False
 plot_sf8  = False
-plot_sf9  = False
+plot_sf9  = True
 plot_sf10 = False
 plot_sf11 = False
-plot_sf12 = True
+plot_sf12 = False
 
 unc = 1.
 
@@ -154,8 +154,8 @@ if plot_sf1 :
     subnum=list('abcdefghijklmnopqrstuvwxyz')
     subnum.reverse()
     ttls = {'tem':'Ocean temperature 0-700 m [°C]', \
-            'no3':'NO3 concentration 0-700 m [mmol-N/m$^3$]', \
-            'npp':'Net primary production [mmol-N/m$^2$/d]'}
+            'no3':'NO3 concentration 0-700 m [mmolN/m$^3$]', \
+            'npp':'Net primary production [mmolN/m$^2$/d]'}
     
     def plotdata(zax, zvar) :
         zdat = data2plot[zvar]
@@ -268,7 +268,7 @@ if plot_sf2 :
 
     infact  = 1/2.54
     nrow, ncol = 7, 2
-    fsize   = (ncol*3.5*infact, nrow*3.5*infact) #(width, height)
+    fsize   = (ncol*3*infact, nrow*3*infact) #(width, height)
     fig, ax = plt.subplots(nrow, ncol, sharey='row', sharex='col', figsize=fsize)
 
     aa = np.linspace(-30, 0, 6)
@@ -323,7 +323,7 @@ if plot_sf2 :
     fig.colorbar(cf[0, 0], cax=cbar_ax, orientation='horizontal', ticklocation='top', \
                  label=cbtitle, ticks=[-30, 0, 30])
 
-    cbtitle = 'NPP [mmol-N/m$^2$/d]'
+    cbtitle = 'NPP [mmolN/m$^2$/d]'
     zw = ax[0, 1].get_position()
     cbar_ax = fig.add_axes([zw.x0, zw.y0+zw.height*1.4, zw.width, 0.01])
     fig.colorbar(cf[0, 1], cax=cbar_ax, orientation='horizontal', ticklocation='top', \
@@ -424,7 +424,7 @@ if plot_sf3 :
 
     infact  = 1/2.54
     nrow, ncol = 7, 3
-    fsize   = (ncol*3.5*infact, nrow*3.5*infact) #(width, height)
+    fsize   = (ncol*3*infact, nrow*3*infact) #(width, height)
     fig, ax = plt.subplots(nrow, ncol, sharex='col',figsize=fsize)
 
     ttls={'R1'               :'\nk$_{gm}$=1e$^3$, k$_{redi}$=1e$^3$', \
@@ -473,7 +473,7 @@ if plot_sf3 :
         Y2 = Y1 + zdat['tNP']
         zllRP   =  zaxrow[2].fill_between(X, Y1    , color='0')
         zllNP   =  zaxrow[2].fill_between(X, Y1, Y2, color='.5')
-        ttt='('+subnum.pop()+')'
+        ttt='('+subnum.pop()+') ' + ttls[zres]
         zaxrow[2].set_title(ttt, loc='left')
         zaxrow[2].set_ylim((-1., 0.1))
         zaxrow[2].locator_params(axis='y', nbins=4)
@@ -503,7 +503,7 @@ if plot_sf3 :
     for zax in ax[:-1, :].flatten() : zax.tick_params(bottom=False)
     for zax in ax[:, 1].flatten() : zax.tick_params(left=False)
     for zax in ax[:, -1].flatten() :
-        zax.set_ylabel('[mmol-N/m$^2$/d]')
+        zax.set_ylabel('[mmolN/m$^2$/d]')
         zax.yaxis.set_ticks_position('right')
         zax.yaxis.set_label_position('right')
     #
@@ -570,7 +570,7 @@ if plot_sf4 :
 
     infact  = 1/2.54
     nrow, ncol = 7, 3
-    fsize   = (ncol*3.5*infact, nrow*3.5*infact) #(width, height)
+    fsize   = (ncol*4*infact, nrow*3*infact) #(width, height)
     fig, ax = plt.subplots(nrow, ncol, sharey='row', sharex='col', figsize=fsize)
 
     aa  = np.linspace(-4, 0, 6)
@@ -629,7 +629,7 @@ if plot_sf4 :
     #
     fig.subplots_adjust(hspace=.4)
 
-    cbtitle = 'NO3 [mmol-N/m$^3$]'
+    cbtitle = 'NO3 [mmolN/m$^3$]'
     zw1 = ax[0, 0].get_position()
     zw2 = ax[0, 1].get_position()
     nwidth = zw1.width*1.5
@@ -638,7 +638,7 @@ if plot_sf4 :
     cbar_ax = fig.add_axes([nx0, ny0, nwidth, 0.01])
     fig.colorbar(cf[0,0], cax=cbar_ax, orientation='horizontal', ticklocation='top', label=cbtitle)
 
-    cbtitle = '∆NO3 [mmol-N/m$^3$]'
+    cbtitle = '∆NO3 [mmolN/m$^3$]'
     zw = ax[0, -1].get_position()
     ny0 = zw.y0+zw.height*1.4
     cbar_ax = fig.add_axes([zw.x0, ny0, zw.width, 0.01])
@@ -784,8 +784,9 @@ if plot_sf5 :
     ####################
 
     infact  = 1/2.54
-    fsize   = (8*infact, 25*infact) #(width, height)
-    fig, ax = plt.subplots(7, 3, sharey='row', sharex='col', figsize=fsize)
+    nrow, ncol = 7, 3
+    fsize   = (ncol*3*infact, nrow*3*infact) #(width, height)
+    fig, ax = plt.subplots(nrow, ncol, sharey='row', sharex='col', figsize=fsize)
 
     ccc = {'adv':'k', 'vN':'darkorange', 'wN':'royalblue', 'ldf':'limegreen',\
            'vNgm':'k', 'wNgm':'k'}
@@ -794,30 +795,38 @@ if plot_sf5 :
     aaa = {'adv':.3, 'vN':1, 'wN':1, 'ldf':1, 'vNgm':1, 'wNgm':1}
     nnn = {'adv':'Total', 'vN':'Meri. adv.', 'wN':'Vert. adv.', 'ldf':'Lat. diff.', \
            'vNgm':'GM adv.', 'wNgm':'GM adv.'}
-    def plotdata(zax, zres, zsim) :
-        zdat=data2plot[zres][zsim]
+    note={'R1'               :'1°', \
+          'R1_KL500'         :'1°', \
+          'R1_KL2000'        :'1°', \
+          'R1_KGM500_KL500'  :'1°', \
+          'R1_KGM2000_KL2000':'1°', \
+          'R9':'1/9°', 'R27':'1/27°'}
+    ttls={'R1'               :'k$_{gm}$=1e$^3$, k$_{redi}$=1e$^3$', \
+          'R1_KL500'         :'k$_{gm}$=1e$^3$, k$_{redi}$=500', \
+          'R1_KL2000'        :'k$_{gm}$=1e$^3$, k$_{redi}$=2e$^3$', \
+          'R1_KGM500_KL500'  :'k$_{gm}$=500, k$_{redi}$=500', \
+          'R1_KGM2000_KL2000':'k$_{gm}$=2e$^3$, k$_{redi}$=2e$^3$', \
+          'R9':'', 'R27':''}
+    def plotdata(zax, zres, zpart) :
+        zdat=data2plot[zres][zpart]
         zfact = 3600*24. / ( 3180*1e3 * (2833-1721)*1e3 ) # mmol/s -> mmol/m2/d
         zlines = []
         znames = []
         Y = zdat.pop('depW')
         for zkproc in zdat.keys() :
             zl, = zax.plot(zfact * zdat[zkproc], Y, lw=1.5, c=ccc[zkproc], ls=sss[zkproc], alpha=aaa[zkproc])
+            zax.annotate(note[zres], xy=(-1.3, 60), \
+                         bbox=dict(boxstyle="round", fc="1"))
             zlines.append(zl)
             znames.append(nnn[zkproc])
         #
         zax.set_ylim((400, 0))
         zax.yaxis.set_ticks([0, 100, 200, 300, 400])
-        zax.set_title('('+subnum.pop()+') '+ttls[zres]+', '+zsim.lower(), loc='left')
+        zax.set_title('('+subnum.pop()+') '+zpart.upper()+'\n'+ttls[zres], loc='left')
         zax.vlines(0, 0, 400, color='grey')
         return (zlines, znames)
     #
 
-    ttls={'R1'               :'1°, k$_{gm}$=1e$^3$\nk$_{redi}$=1e$^3$', \
-          'R1_KL500'         :'1°, k$_{gm}$=1e$^3$\nk$_{redi}$=500', \
-          'R1_KL2000'        :'1°, k$_{gm}$=1e$^3$\nk$_{redi}$=2e$^3$', \
-          'R1_KGM500_KL500'  :'1°, k$_{gm}$=500\nk$_{redi}$=500', \
-          'R1_KGM2000_KL2000':'1°, k$_{gm}$=2e$^3$\nk$_{redi}$=2e$^3$', \
-          'R9':'1/9°', 'R27':'1/27°'}
     subnum=list('abcdefghijklmnopqrstuvwxyz')
     subnum.reverse()
     r1s = ['1', '1_KL2000', '1_KL500', '1_KGM500_KL500', '1_KGM2000_KL2000']
@@ -841,6 +850,7 @@ if plot_sf5 :
         zax.yaxis.set_label_position('right')
     for zax in ax[-1, :].flatten() : 
         zax.set_xlim((-1.5, 3.5))
+        zax.set_xlabel('mmolN/m$^2$/d')
         zax.xaxis.set_ticks([-1.5, 0, 1.5, 3])
     #    
     fig.subplots_adjust(hspace=.5)
@@ -1002,8 +1012,9 @@ if plot_sf6 :
     ####################
 
     infact  = 1/2.54
-    fsize   = (8*infact, 25*infact) #(width, height)
-    fig, ax = plt.subplots(7, 3, sharey='row', sharex='col', figsize=fsize)
+    nrow, ncol = 7, 3
+    fsize   = (ncol*3*infact, nrow*3*infact) #(width, height)
+    fig, ax = plt.subplots(nrow, ncol, sharey='row', sharex='col', figsize=fsize)
 
     ccc = {'adv':'k', 'vN':'darkorange', 'wN':'royalblue', 'ldf':'limegreen',\
            'vNgm':'k', 'wNgm':'k'}
@@ -1012,8 +1023,20 @@ if plot_sf6 :
     aaa = {'adv':.3, 'vN':1, 'wN':1, 'ldf':1, 'vNgm':1, 'wNgm':1}
     nnn = {'adv':'Total', 'vN':'Meri. adv.', 'wN':'Vert. adv.', 'ldf':'Lat. diff.', \
            'vNgm':'GM adv.', 'wNgm':'GM adv.'}
-    def plotdata(zax, zres, zsim) :
-        zdat=data2plot[zres][zsim]
+    note={'R1'               :'1°', \
+          'R1_KL500'         :'1°', \
+          'R1_KL2000'        :'1°', \
+          'R1_KGM500_KL500'  :'1°', \
+          'R1_KGM2000_KL2000':'1°', \
+          'R9':'1/9°', 'R27':'1/27°'}
+    ttls={'R1'               :'k$_{gm}$=1e$^3$, k$_{redi}$=1e$^3$', \
+          'R1_KL500'         :'k$_{gm}$=1e$^3$, k$_{redi}$=500', \
+          'R1_KL2000'        :'k$_{gm}$=1e$^3$, k$_{redi}$=2e$^3$', \
+          'R1_KGM500_KL500'  :'k$_{gm}$=500, k$_{redi}$=500', \
+          'R1_KGM2000_KL2000':'k$_{gm}$=2e$^3$, k$_{redi}$=2e$^3$', \
+          'R9':'', 'R27':''}
+    def plotdata(zax, zres, zpart) :
+        zdat=data2plot[zres][zpart]
         zfact = 3600*24. / ( 3180*1e3 * (2833-1721)*1e3 ) # mmol/s -> mmol/m2/d
         zlines = []
         znames = []
@@ -1022,20 +1045,16 @@ if plot_sf6 :
             zl, = zax.plot(zfact * zdat[zkproc], Y, lw=1.5, c=ccc[zkproc], ls=sss[zkproc], alpha=aaa[zkproc])
             zlines.append(zl)
             znames.append(nnn[zkproc])
+            zax.annotate(note[zres], xy=(-1.4, 80), \
+                         bbox=dict(boxstyle="round", fc="1"))
         #
         zax.set_ylim((400, 0))
         zax.yaxis.set_ticks([0, 100, 200, 300, 400])
-        zax.set_title('('+subnum.pop()+') '+ttls[zres]+', '+zsim.lower(), loc='left')
+        zax.set_title('('+subnum.pop()+') '+zpart.upper()+'\n'+ttls[zres], loc='left')
         zax.vlines(0, 0, 400, color='grey')
         return (zlines, znames)
     #
 
-    ttls={'R1'               :'1°, k$_{gm}$=1e$^3$\nk$_{redi}$=1e$^3$', \
-          'R1_KL500'         :'1°, k$_{gm}$=1e$^3$\nk$_{redi}$=500', \
-          'R1_KL2000'        :'1°, k$_{gm}$=1e$^3$\nk$_{redi}$=2e$^3$', \
-          'R1_KGM500_KL500'  :'1°, k$_{gm}$=500\nk$_{redi}$=500', \
-          'R1_KGM2000_KL2000':'1°, k$_{gm}$=2e$^3$\nk$_{redi}$=2e$^3$', \
-          'R9':'1/9°', 'R27':'1/27°'}
     subnum=list('abcdefghijklmnopqrstuvwxyz')
     subnum.reverse()
     ll = np.zeros_like(ax)
@@ -1057,6 +1076,7 @@ if plot_sf6 :
         zax.yaxis.set_ticks_position('right')
         zax.yaxis.set_label_position('right')
     for zax in ax[-1, :].flatten() : 
+        zax.set_xlabel('mmolN/m$^2$/d')
         zax.set_xlim((-1.7, .7))
         zax.xaxis.set_ticks([ -1.4, -.7, 0, .7])
     #    
@@ -1249,8 +1269,9 @@ if plot_sf7 :
     ####################
 
     infact  = 1/2.54
-    fsize   = (8*infact, 25*infact) #(width, height)
-    fig, ax = plt.subplots(7, 3, sharey='row', sharex='col', figsize=fsize)
+    nrow, ncol = 7, 3
+    fsize   = (ncol*3*infact, nrow*3*infact) #(width, height)
+    fig, ax = plt.subplots(nrow, ncol, sharey='row', sharex='col', figsize=fsize)
 
     ccc = {'dvN':'k', 'vdN':'firebrick', 'Ndv':'mediumblue', 'dvdN':'.7'}
     nnn = {'dvN':'$\Delta$(v$\cdot$NO3)', 'vdN':'$\Delta$Nitrate', \
@@ -1262,13 +1283,6 @@ if plot_sf7 :
           'R1_KGM500_KL500'  :'1°', \
           'R1_KGM2000_KL2000':'1°', \
           'R9':'1/9°', 'R27':'1/27°'}
-
-    # ttls={'R1'               :'1°, k$_{gm}$=1e$^3$\nk$_{redi}$=1e$^3$', \
-    #       'R1_KL500'         :'1°, k$_{gm}$=1e$^3$\nk$_{redi}$=500', \
-    #       'R1_KL2000'        :'1°, k$_{gm}$=1e$^3$\nk$_{redi}$=2e$^3$', \
-    #       'R1_KGM500_KL500'  :'1°, k$_{gm}$=500\nk$_{redi}$=500', \
-    #       'R1_KGM2000_KL2000':'1°, k$_{gm}$=2e$^3$\nk$_{redi}$=2e$^3$', \
-    #       'R9':'1/9°', 'R27':'1/27°'}
     ttls={'R1'               :'k$_{gm}$=1e$^3$, k$_{redi}$=1e$^3$', \
           'R1_KL500'         :'k$_{gm}$=1e$^3$, k$_{redi}$=500', \
           'R1_KL2000'        :'k$_{gm}$=1e$^3$, k$_{redi}$=2e$^3$', \
@@ -1291,7 +1305,7 @@ if plot_sf7 :
         #
         zax.set_ylim((400, 0))
         zax.yaxis.set_ticks([0, 100, 200, 300, 400])
-        zax.set_title('('+subnum.pop()+') '+zpart.lower()+'\n'+ttls[zres], loc='left')
+        zax.set_title('('+subnum.pop()+') '+zpart.upper()+'\n'+ttls[zres], loc='left')
         zax.vlines(0, 0, 400, color='grey')
         zax.annotate(note[zres], xy=(-1.4, 80), \
                      bbox=dict(boxstyle="round", fc="1"))
@@ -1317,6 +1331,7 @@ if plot_sf7 :
         zax.yaxis.set_ticks_position('right')
         zax.yaxis.set_label_position('right')
     for zax in ax[-1, :].flatten() : 
+        zax.set_xlabel('mmolN/m$^2$/d')
         zax.set_xlim((-1.7, .7))
         zax.xaxis.set_ticks([ -1.4, -.7, 0, .7])
     #    
@@ -1548,8 +1563,8 @@ if plot_sf8 :
           'W GSP'   : 'Upw. vel.', \
           'V 35N'   : 'Northw. vel.', \
           'N2 GSP'  : 'Stratif.'}
-    units={'NO3 GSP' : '[mmol-N/m$^3$]', \
-           'NO3 35N' : '[mmol-N/m$^3$]', \
+    units={'NO3 GSP' : '[mmolN/m$^3$]', \
+           'NO3 35N' : '[mmolN/m$^3$]', \
            'W GSP'   : '[m/d]', \
            'V 35N'   : '[m/d]', \
            'N2 GSP'  : '[s$^{-2}$]'}
@@ -1681,7 +1696,7 @@ if plot_sf9 :
 
     infact  = 1/2.54
     nrow, ncol = 7, 3
-    fsize   = (ncol*3.5*infact, nrow*3.5*infact) #(width, height)
+    fsize   = (ncol*3*infact, nrow*3*infact) #(width, height)
     fig, ax = plt.subplots(nrow, ncol, sharex='col',figsize=fsize)
 
     ttls={'R1'               :'k$_{gm}$=1e$^3$, k$_{redi}$=1e$^3$', \
@@ -1736,7 +1751,7 @@ if plot_sf9 :
         zaxrow[2].set_title(ttt, loc='left')
         zaxrow[2].set_ylim((0, 0.007))
         zaxrow[2].locator_params(axis='y', nbins=4)
-        zaxrow[2].annotate(note[zres], xy=(1800, .005), \
+        zaxrow[2].annotate(note[zres], xy=(1600, .005), \
                         bbox=dict(boxstyle="round", fc="1"))
         #___________________
         return (zcfctl, zcfdelta, zlhctl, zlhcc)
@@ -1750,6 +1765,7 @@ if plot_sf9 :
         cf[irow] = plotdata(ax[irow], 'R'+zres)
         irow+=1
     #
+    ax[-1, -1].set_xlabel('Metres')
 
     cbtitle = 'MLD, CTL simulation [m]'
     zw = ax[0, 0].get_position()
@@ -1828,7 +1844,7 @@ if plot_sf10 :
 
     infact  = 1/2.54
     nrow, ncol = 7, 3
-    fsize   = (ncol*3.5*infact, nrow*3.5*infact) #(width, height)
+    fsize   = (ncol*4*infact, nrow*3*infact) #(width, height)
     fig, ax = plt.subplots(nrow, ncol, sharey='row', sharex='col', figsize=fsize)
 
     aa  = np.linspace(-5, 0, 6)
@@ -2048,7 +2064,7 @@ if plot_sf11 :
         zax.yaxis.set_label_position('right')
     #
 
-    cbtitle = 'NO3 adv. fluxes divergence [mmol-N/m$^2$/d]'
+    cbtitle = 'NO3 adv. fluxes divergence [mmolN/m$^2$/d]'
     zw0 = ax[0, 0].get_position()
     zw2 = ax[0, 2].get_position()
     nx0 = zw0.x0 + 0.5*zw0.width
@@ -2259,7 +2275,7 @@ if plot_sf12 :
 
     infact  = 1/2.54
     nrow, ncol = 7, 3
-    fsize   = (ncol*3.5*infact, nrow*3.5*infact) #(width, height)
+    fsize   = (ncol*4*infact, nrow*3*infact) #(width, height)
     fig, ax = plt.subplots(nrow, ncol, sharey='row', sharex='col', figsize=fsize)
 
     aa  = np.linspace(-5, 0, 6)
