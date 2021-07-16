@@ -2,7 +2,6 @@ from IPython import embed
 import time
 import pickle
 
-# import functions_GYRE as fGYRE
 import numpy as np
 import matplotlib as mpl
 import matplotlib.pyplot as plt
@@ -14,14 +13,15 @@ from FGYRE import reading, averaging, interpolating, \
 plot_sf1  = False
 plot_sf2  = False
 plot_sf3  = False
+plot_sf3_old  = False
 plot_sf4  = False
 plot_sf5  = False
 plot_sf6  = False
 plot_sf7  = False
 plot_sf8  = False
-plot_sf9  = True
+plot_sf9  = False
 plot_sf10 = False
-plot_sf11 = False
+plot_sf11 = True
 plot_sf12 = False
 
 unc = 1.
@@ -30,9 +30,10 @@ unc = 1.
 # SF1
 ##################################################
 if plot_sf1 :
-
+    print(">>> plot_sf1 <<<")
+    
     savefig = 'sf1.png'
-    fdir  = '/gpfswork/rech/dyk/rdyk004/GYRE_XML/'          
+    fdir  = '/gpfswork/rech/eee/rdyk004/GYRE_XML/'          
     iyears = 10
     years  = np.arange(1, 170, iyears)
     data2plot = {}
@@ -48,9 +49,9 @@ if plot_sf1 :
     fsuf = '_1y_00010101_01701230_grid_T.xml'
     sim  = ['CTL', 'CC']
     for vres in res :
-        if vres in ['9', '27'] : zwmesh = reading.read_mesh('/gpfswork/rech/dyk/rdyk004/MESH/mesh_mask_R'+vres+'.nc')
-        else :  zwmesh = reading.read_mesh('/gpfswork/rech/dyk/rdyk004/MESH/mesh_mask_R1.nc' )
-        # zwmesh = reading.read_mesh('/gpfswork/rech/dyk/rdyk004/MESH/mesh_mask_R1.nc' ) # TEST
+        if vres in ['9', '27'] : zwmesh = reading.read_mesh('/gpfswork/rech/eee/rdyk004/MESH/mesh_mask_R'+vres+'.nc')
+        else :  zwmesh = reading.read_mesh('/gpfswork/rech/eee/rdyk004/MESH/mesh_mask_R1.nc' )
+        # zwmesh = reading.read_mesh('/gpfswork/rech/eee/rdyk004/MESH/mesh_mask_R1.nc' ) # TEST
         data2plot['tem']['R'+vres]={}
         for vsim in sim :
             data2plot['tem']['R'+vres][vsim] = []
@@ -76,9 +77,9 @@ if plot_sf1 :
     fsuf = '_1y_00010101_01701230_ptrc_T.xml'
     sim  = ['CTL', 'CC']
     for vres in res :
-        if vres in ['9', '27'] : zwmesh = reading.read_mesh('/gpfswork/rech/dyk/rdyk004/MESH/mesh_mask_R'+vres+'.nc')
-        else :  zwmesh = reading.read_mesh('/gpfswork/rech/dyk/rdyk004/MESH/mesh_mask_R1.nc' )
-        # zwmesh = reading.read_mesh('/gpfswork/rech/dyk/rdyk004/MESH/mesh_mask_R1.nc' ) # TEST
+        if vres in ['9', '27'] : zwmesh = reading.read_mesh('/gpfswork/rech/eee/rdyk004/MESH/mesh_mask_R'+vres+'.nc')
+        else :  zwmesh = reading.read_mesh('/gpfswork/rech/eee/rdyk004/MESH/mesh_mask_R1.nc' )
+        # zwmesh = reading.read_mesh('/gpfswork/rech/eee/rdyk004/MESH/mesh_mask_R1.nc' ) # TEST
         data2plot['no3']['R'+vres]={}
         for vsim in sim :
             data2plot['no3']['R'+vres][vsim] = []
@@ -104,9 +105,9 @@ if plot_sf1 :
     fsuf = '_1y_00010101_01701230_diad_T.xml'
     sim  = ['CTL', 'CC']
     for vres in res :
-        if vres in ['9', '27'] : zwmesh = reading.read_mesh('/gpfswork/rech/dyk/rdyk004/MESH/mesh_mask_R'+vres+'.nc')
-        else :  zwmesh = reading.read_mesh('/gpfswork/rech/dyk/rdyk004/MESH/mesh_mask_R1.nc' )
-        # zwmesh = reading.read_mesh('/gpfswork/rech/dyk/rdyk004/MESH/mesh_mask_R1.nc' ) # TEST
+        if vres in ['9', '27'] : zwmesh = reading.read_mesh('/gpfswork/rech/eee/rdyk004/MESH/mesh_mask_R'+vres+'.nc')
+        else :  zwmesh = reading.read_mesh('/gpfswork/rech/eee/rdyk004/MESH/mesh_mask_R1.nc' )
+        # zwmesh = reading.read_mesh('/gpfswork/rech/eee/rdyk004/MESH/mesh_mask_R1.nc' ) # TEST
         data2plot['npp']['R'+vres]={}
         for vsim in sim :
             data2plot['npp']['R'+vres][vsim] = []
@@ -145,17 +146,17 @@ if plot_sf1 :
          'R1_KGM500_KL500'  :3.5, \
          'R1_KGM2000_KL2000':3.5, \
          'R9':2.5, 'R27':1.5}
-    nnn={'R1'               :'1°, k$_{gm}$=1e$^3$\nk$_{redi}$=1e$^3$', \
-         'R1_KL500'         :'1°, k$_{gm}$=1e$^3$\nk$_{redi}$=500'      , \
-         'R1_KL2000'        :'1°, k$_{gm}$=1e$^3$\nk$_{redi}$=2e$^3$', \
-         'R1_KGM500_KL500'  :'1°, k$_{gm}$=500\nk$_{redi}$=500'      , \
-         'R1_KGM2000_KL2000':'1°, k$_{gm}$=2e$^3$\nk$_{redi}$=2e$^3$', \
+    nnn={'R1'               :'1°, k$_{gm}$=1e$^3$\nk$_{iso}$=1e$^3$', \
+         'R1_KL500'         :'1°, k$_{gm}$=1e$^3$\nk$_{iso}$=500'      , \
+         'R1_KL2000'        :'1°, k$_{gm}$=1e$^3$\nk$_{iso}$=2e$^3$', \
+         'R1_KGM500_KL500'  :'1°, k$_{gm}$=500\nk$_{iso}$=500'      , \
+         'R1_KGM2000_KL2000':'1°, k$_{gm}$=2e$^3$\nk$_{iso}$=2e$^3$', \
          'R9':'1/9°', 'R27':'1/27°'}
     subnum=list('abcdefghijklmnopqrstuvwxyz')
     subnum.reverse()
     ttls = {'tem':'Ocean temperature 0-700 m [°C]', \
-            'no3':'NO3 concentration 0-700 m [mmolN/m$^3$]', \
-            'npp':'Net primary production [mmolN/m$^2$/d]'}
+            'no3':'NO$_3$ concentration 0-700 m [mmol$\,$N$\,$m$^{-3}$]', \
+            'npp':'Net primary production [mmol$\,$N$\,$m$^{-2}$d$^{-1}$]'}
     
     def plotdata(zax, zvar) :
         zdat = data2plot[zvar]
@@ -201,7 +202,7 @@ if plot_sf1 :
                    loc='center left')
     
     for zax in fig.axes : zax.tick_params(color='dimgrey')
-    dirfig='/gpfswork/rech/dyk/rdyk004/MY_FIG_PYTHON3/'
+    dirfig='/gpfswork/rech/eee/rdyk004/MY_FIG_PYTHON3/'
     suffig='main_article_gyre_pp_supfig_v2_'
     fig.savefig(dirfig+suffig+savefig) 
     print("Figure saved: ", dirfig+suffig+savefig)
@@ -216,9 +217,10 @@ if plot_sf1 :
 # SF2
 ##################################################
 if plot_sf2 :
+    print(">>> plot_sf2 <<<")
 
     savefig = 'sf2.png'
-    fdir  = '/gpfswork/rech/dyk/rdyk004/GYRE_XML/'          
+    fdir  = '/gpfswork/rech/eee/rdyk004/GYRE_XML/'          
     sdate  = '0166-01-01'
     edate  = '0170-12-31'
     res  = ['1', '1_KL2000', '1_KL500', '1_KGM500_KL500', '1_KGM2000_KL2000', '9', '27']
@@ -232,9 +234,9 @@ if plot_sf2 :
     data2plot['bsf']={}
     fsuf  = '_1y_01010101_01701230_grid_V.xml'
     for vres in res : 
-        if vres in ['9', '27'] : zwmesh = reading.read_mesh('/gpfswork/rech/dyk/rdyk004/MESH/mesh_mask_R'+vres+'.nc')
-        else :  zwmesh = reading.read_mesh('/gpfswork/rech/dyk/rdyk004/MESH/mesh_mask_R1.nc' )
-        # zwmesh = reading.read_mesh('/gpfswork/rech/dyk/rdyk004/MESH/mesh_mask_R1.nc' ) # TEST
+        if vres in ['9', '27'] : zwmesh = reading.read_mesh('/gpfswork/rech/eee/rdyk004/MESH/mesh_mask_R'+vres+'.nc')
+        else :  zwmesh = reading.read_mesh('/gpfswork/rech/eee/rdyk004/MESH/mesh_mask_R1.nc' )
+        # zwmesh = reading.read_mesh('/gpfswork/rech/eee/rdyk004/MESH/mesh_mask_R1.nc' ) # TEST
         data2plot['bsf']['CTL'+vres]={'lon':zwmesh['lonV'], 'lat':zwmesh['latV']}
         fff = fdir + 'CTL' + vres + fsuf
         zw  = reading.read_ncdf('vomecrty', fff, time=(sdate, edate))
@@ -248,17 +250,18 @@ if plot_sf2 :
     ####################
 
     data2plot['npp']={}
-    fsuf  = '_1y_01010101_01701230_pp.xml'
-    for vres in res : 
-        if vres in ['9', '27'] : zwmesh = reading.read_mesh('/gpfswork/rech/dyk/rdyk004/MESH/mesh_mask_R'+vres+'.nc')
-        else :  zwmesh = reading.read_mesh('/gpfswork/rech/dyk/rdyk004/MESH/mesh_mask_R1.nc' )
-        # zwmesh = reading.read_mesh('/gpfswork/rech/dyk/rdyk004/MESH/mesh_mask_R1.nc' ) # TEST
+    fsuf = '_1y_00010101_01701230_diad_T.xml'
+    for vres in res :
+        if vres in ['9', '27'] : zwmesh = reading.read_mesh('/gpfswork/rech/eee/rdyk004/MESH/mesh_mask_R'+vres+'.nc')
+        else :  zwmesh = reading.read_mesh('/gpfswork/rech/eee/rdyk004/MESH/mesh_mask_R1.nc' )
+        # zwmesh = reading.read_mesh('/gpfswork/rech/eee/rdyk004/MESH/mesh_mask_R1.nc' ) # TEST
         data2plot['npp']['CTL'+vres]={'lon':zwmesh['lonT'], 'lat':zwmesh['latT']}
         fff = fdir + 'CTL' + vres + fsuf
-        zw  = reading.read_ncdf('PP', fff, time=(sdate, edate))
-        zw = zw['data']
-        zw = averaging.tmean(zw, zwmesh) 
-        zw = averaging.zmean(zw, zwmesh, dim='zyx', integral=True) 
+        zw1 = reading.read_ncdf('TNO3PHY', fff, time=(sdate, edate))
+        zw = zw1['data']
+        zw1 = reading.read_ncdf('TNH4PHY', fff, time=(sdate, edate))
+        zw += zw1['data']
+        zw = averaging.tmean(zw, zwmesh, dim='tyx') 
         data2plot['npp']['CTL'+vres]['data'] = zw
     #
     
@@ -278,11 +281,11 @@ if plot_sf2 :
     lev  = {'bsf':levbsf, 'npp':levnpp}
     cmap = {'bsf':'RdBu', 'npp':'viridis'}
     ext  = {'bsf':'both', 'npp':'max'}
-    ttls={'CTL1'               :'k$_{gm}$=1e$^3$, k$_{redi}$=1e$^3$', \
-          'CTL1_KL500'         :'k$_{gm}$=1e$^3$, k$_{redi}$=500'      , \
-          'CTL1_KL2000'        :'k$_{gm}$=1e$^3$, k$_{redi}$=2e$^3$', \
-          'CTL1_KGM500_KL500'  :'k$_{gm}$=500, k$_{redi}$=500'      , \
-          'CTL1_KGM2000_KL2000':'k$_{gm}$=2e$^3$, k$_{redi}$=2e$^3$', \
+    ttls={'CTL1'               :'k$_{gm}$=1e$^3$, k$_{iso}$=1e$^3$', \
+          'CTL1_KL500'         :'k$_{gm}$=1e$^3$, k$_{iso}$=500'      , \
+          'CTL1_KL2000'        :'k$_{gm}$=1e$^3$, k$_{iso}$=2e$^3$', \
+          'CTL1_KGM500_KL500'  :'k$_{gm}$=500, k$_{iso}$=500'      , \
+          'CTL1_KGM2000_KL2000':'k$_{gm}$=2e$^3$, k$_{iso}$=2e$^3$', \
           'CTL9':'', 'CTL27':''}
     note={'CTL1'               :'1°', \
           'CTL1_KL500'         :'1°', \
@@ -323,7 +326,7 @@ if plot_sf2 :
     fig.colorbar(cf[0, 0], cax=cbar_ax, orientation='horizontal', ticklocation='top', \
                  label=cbtitle, ticks=[-30, 0, 30])
 
-    cbtitle = 'NPP [mmolN/m$^2$/d]'
+    cbtitle = 'NPP [mmol$\,$N$\,$m$^{-2}$d$^{-1}$]'
     zw = ax[0, 1].get_position()
     cbar_ax = fig.add_axes([zw.x0, zw.y0+zw.height*1.4, zw.width, 0.01])
     fig.colorbar(cf[0, 1], cax=cbar_ax, orientation='horizontal', ticklocation='top', \
@@ -340,7 +343,7 @@ if plot_sf2 :
 
         
     for zax in fig.axes : zax.tick_params(color='dimgrey')
-    dirfig='/gpfswork/rech/dyk/rdyk004/MY_FIG_PYTHON3/'
+    dirfig='/gpfswork/rech/eee/rdyk004/MY_FIG_PYTHON3/'
     suffig='main_article_gyre_pp_supfig_v2_'
     fig.savefig(dirfig+suffig+savefig) 
     print("Figure saved: ", dirfig+suffig+savefig)
@@ -352,12 +355,13 @@ if plot_sf2 :
 ##################################################
 
 ##################################################
-# SF3
+# SF3 OLD
 ##################################################
-if plot_sf3 : 
+if plot_sf3_old : 
+    print(">>> plot_sf3_old <<<")
 
-    savefig = 'sf3.png'
-    fdir  = '/gpfswork/rech/dyk/rdyk004/GYRE_XML/'          
+    savefig = 'sf3_old.png'
+    fdir  = '/gpfswork/rech/eee/rdyk004/GYRE_XML/'          
     fsuf='_1y_01010101_01701230_diad_T.xml'
     res  = ['1', '1_KL2000', '1_KL500', '1_KGM500_KL500', '1_KGM2000_KL2000', '9', '27']
     # res  = ['1', '1_KL2000', '1_KL500', '1_KGM500_KL500', '1_KGM2000_KL2000', '1', '1'] # TEST
@@ -373,9 +377,9 @@ if plot_sf3 :
          'RP':'TNH4PHY'}
 
     for vres in res :
-        if vres in ['9', '27'] : zwmesh = reading.read_mesh('/gpfswork/rech/dyk/rdyk004/MESH/mesh_mask_R'+vres+'.nc')
-        else :  zwmesh = reading.read_mesh('/gpfswork/rech/dyk/rdyk004/MESH/mesh_mask_R1.nc' )
-        # zwmesh = reading.read_mesh('/gpfswork/rech/dyk/rdyk004/MESH/mesh_mask_R1.nc' ) # TEST
+        if vres in ['9', '27'] : zwmesh = reading.read_mesh('/gpfswork/rech/eee/rdyk004/MESH/mesh_mask_R'+vres+'.nc')
+        else :  zwmesh = reading.read_mesh('/gpfswork/rech/eee/rdyk004/MESH/mesh_mask_R1.nc' )
+        # zwmesh = reading.read_mesh('/gpfswork/rech/eee/rdyk004/MESH/mesh_mask_R1.nc' ) # TEST
         data2plot['R'+vres] = {'lon':zwmesh['lonT'], 'lat':zwmesh['latT']}
         for vvv in ['NP', 'RP'] :
             zw = {}
@@ -401,9 +405,9 @@ if plot_sf3 :
          'RP':'TNH4PHY'}
 
     for vres in res :
-        if vres in ['9', '27'] : zwmesh = reading.read_mesh('/gpfswork/rech/dyk/rdyk004/MESH/mesh_mask_R'+vres+'.nc')
-        else :  zwmesh = reading.read_mesh('/gpfswork/rech/dyk/rdyk004/MESH/mesh_mask_R1.nc' )
-        # zwmesh = reading.read_mesh('/gpfswork/rech/dyk/rdyk004/MESH/mesh_mask_R1.nc' ) # TEST
+        if vres in ['9', '27'] : zwmesh = reading.read_mesh('/gpfswork/rech/eee/rdyk004/MESH/mesh_mask_R'+vres+'.nc')
+        else :  zwmesh = reading.read_mesh('/gpfswork/rech/eee/rdyk004/MESH/mesh_mask_R1.nc' )
+        # zwmesh = reading.read_mesh('/gpfswork/rech/eee/rdyk004/MESH/mesh_mask_R1.nc' ) # TEST
         for vvv in ['NP', 'RP'] :
             zw = {}
             for vsim in ['CTL', 'CC'] : 
@@ -419,19 +423,47 @@ if plot_sf3 :
     #
 
     ####################
+    # TIMSERIES F-RATIO
+    ####################
+
+    sdate  = '0101-01-01'
+    edate  = '0170-12-31'
+    var={'NP':'TNO3PHY',
+         'RP':'TNH4PHY'}
+
+    for vres in res :
+        if vres in ['9', '27'] : zwmesh = reading.read_mesh('/gpfswork/rech/eee/rdyk004/MESH/mesh_mask_R'+vres+'.nc')
+        else :  zwmesh = reading.read_mesh('/gpfswork/rech/eee/rdyk004/MESH/mesh_mask_R1.nc' )
+        # zwmesh = reading.read_mesh('/gpfswork/rech/eee/rdyk004/MESH/mesh_mask_R1.nc' ) # TEST
+        for vsim in ['CTL', 'CC'] :
+            zw = {}
+            for vvv in ['NP', 'RP'] :
+                fff = fdir + vsim + vres + fsuf
+                zw2  = reading.read_ncdf(var[vvv], fff, time=(sdate, edate))
+                zw2  = zw2['data']
+                zw2 = averaging.ymean(zw2, zwmesh, grid='T', dim='tyx', ymin=35, ymax=45) 
+                zw2 = averaging.xmean(zw2, zwmesh, grid='T', dim='tx')
+                zw[vvv] = zw2
+            #
+            data2plot['R'+vres]['f'+vsim] = zw['NP'] / (zw['NP'] + zw['RP'])
+        #
+    #
+
+
+    ####################
     # PLOT DATA
     ####################
 
     infact  = 1/2.54
-    nrow, ncol = 7, 3
+    nrow, ncol = 7, 4
     fsize   = (ncol*3*infact, nrow*3*infact) #(width, height)
     fig, ax = plt.subplots(nrow, ncol, sharex='col',figsize=fsize)
 
-    ttls={'R1'               :'\nk$_{gm}$=1e$^3$, k$_{redi}$=1e$^3$', \
-          'R1_KL500'         :'\nk$_{gm}$=1e$^3$, k$_{redi}$=500'      , \
-          'R1_KL2000'        :'\nk$_{gm}$=1e$^3$, k$_{redi}$=2e$^3$', \
-          'R1_KGM500_KL500'  :'\nk$_{gm}$=500, k$_{redi}$=500'      , \
-          'R1_KGM2000_KL2000':'\nk$_{gm}$=2e$^3$, k$_{redi}$=2e$^3$', \
+    ttls={'R1'               :'\nk$_{gm}$=1e$^3$, k$_{iso}$=1e$^3$', \
+          'R1_KL500'         :'\nk$_{gm}$=1e$^3$, k$_{iso}$=500'      , \
+          'R1_KL2000'        :'\nk$_{gm}$=1e$^3$, k$_{iso}$=2e$^3$', \
+          'R1_KGM500_KL500'  :'\nk$_{gm}$=500, k$_{iso}$=500'      , \
+          'R1_KGM2000_KL2000':'\nk$_{gm}$=2e$^3$, k$_{iso}$=2e$^3$', \
           'R9':'', 'R27':''}
     note={'R1'               :'1°', \
           'R1_KL500'         :'1°', \
@@ -440,6 +472,7 @@ if plot_sf3 :
           'R1_KGM2000_KL2000':'1°', \
           'R9':'1/9°', 'R27':'1/27°'}
     subnum=list('abcdefghijklmnopqrstuvwxyz')
+    subnum=subnum+list(map('a'.__add__,subnum))
     subnum.reverse()
 
     def plotdata(zaxrow, zres) :
@@ -452,23 +485,21 @@ if plot_sf3 :
         X, Y = zdat['lon'], zdat['lat']
         # NP
         zcfNP = zaxrow[0].contourf(X, Y, zdat['mNP'], levels=lev, cmap='PiYG', extend='both')
-        ttt='('+subnum.pop()+') NPP from NO3'+ttls[zres]
+        ttt='('+subnum.pop()+') NPP from NO$_3$'+ttls[zres]
         plotting.make_XY_axis(zaxrow[0], title=ttt)
         zaxrow[0].label_outer()
         zaxrow[0].annotate(note[zres], xy=(-83, 23), \
                         bbox=dict(boxstyle="round", fc="1"))
         # RP
         zcfRP = zaxrow[1].contourf(X, Y, zdat['mRP'], levels=lev, cmap='PiYG', extend='both')
-        ttt='('+subnum.pop()+') NPP from NH4'+ttls[zres]
+        ttt='('+subnum.pop()+') NPP from NH$_4$'+ttls[zres]
         plotting.make_XY_axis(zaxrow[1], title=ttt)
         zaxrow[1].label_outer()
         zaxrow[1].annotate(note[zres], xy=(-83, 23), \
                         bbox=dict(boxstyle="round", fc="1"))
         #___________________
-        # TIMESERIES
+        # TIMESERIES NP RP
         X = np.arange(70)+1
-        colnp='black'
-        colrp='silver'
         Y1 = zdat['tRP']
         Y2 = Y1 + zdat['tNP']
         zllRP   =  zaxrow[2].fill_between(X, Y1    , color='0')
@@ -480,7 +511,21 @@ if plot_sf3 :
         zaxrow[2].annotate(note[zres], xy=(7, -.85), \
                         bbox=dict(boxstyle="round", fc="1"))
         #___________________
-        return (zcfNP, zcfRP, zllNP, zllRP)
+        # TIMESERIES F-RATIO
+        X = np.arange(70)+1
+        Y1 = zdat['fCTL']
+        Y2 = zdat['fCC']
+        zllfCT,  =  zaxrow[3].plot(X, Y1, color='0', ls='--', dashes=[1.5, .7])
+        zllfCC,  =  zaxrow[3].plot(X, Y2, color='0', ls='-' )
+        ttt='('+subnum.pop()+') ' + ttls[zres]
+        zaxrow[3].set_title(ttt, loc='left')
+        zaxrow[3].set_ylim((0, 1))
+        zaxrow[3].locator_params(axis='y', nbins=4)
+        zaxrow[3].annotate(note[zres], xy=(7, .136), \
+                        bbox=dict(boxstyle="round", fc="1"))
+        # zaxrow[3].annotate(note[zres], xy=(7, .527), \
+        #                 bbox=dict(boxstyle="round", fc="1"))
+        return (zcfNP, zcfRP, zllNP, zllRP, zllfCT, zllfCC)
     #
 
     cf = np.zeros_like(ax[:, 0])
@@ -490,6 +535,7 @@ if plot_sf3 :
         cf[irow] = plotdata(ax[irow], 'R'+zres)
         irow+=1
     #
+    fig.subplots_adjust(hspace=.4)
 
     cbtitle = 'Percent of NPP change '
     zw1 = ax[0, 0].get_position()
@@ -502,29 +548,318 @@ if plot_sf3 :
 
     for zax in ax[:-1, :].flatten() : zax.tick_params(bottom=False)
     for zax in ax[:, 1].flatten() : zax.tick_params(left=False)
-    for zax in ax[:, -1].flatten() :
+    for zax in ax[:, -2].flatten() :
         zax.set_ylabel('[mmolN/m$^2$/d]')
+        zw = zax.get_position()
+        zax.set_position([zw.x0+.09, zw.y0, zw.width, zw.height])
+    #
+    for zax in ax[:, -1].flatten() :
         zax.yaxis.set_ticks_position('right')
         zax.yaxis.set_label_position('right')
+        zw = zax.get_position()
+        zax.set_position([zw.x0+.11, zw.y0, zw.width, zw.height])
     #
+    ax[-1, -2].set_xlim(1, 71)
+    ax[-1, -2].xaxis.set_ticks([1, 71])
+    ax[-1, -2].xaxis.set_ticklabels(['0', '70 years'])
     ax[-1, -1].set_xlim(1, 71)
     ax[-1, -1].xaxis.set_ticks([1, 71])
     ax[-1, -1].xaxis.set_ticklabels(['0', '70 years'])
-    fig.subplots_adjust(hspace=.4)
 
-    hdl=(cf[0][-1], cf[0][-2])
-    nam=('from NH4', 'from NO3')  
-    zw = ax[0, -1].get_position()
+    hdl=(cf[0][3], cf[0][2])
+    nam=('from NH$_4$', 'from NO$_3$')  
+    zw = ax[0, -2].get_position()
     legax = fig.add_axes([zw.x0, zw.y0+zw.height*1.4, zw.width, .01])
     legax.axis('off')
     leg=legax.legend( hdl, nam, loc='lower center', title='Mean NPP change:')
     leg._legend_box.align = "left"
-    
+
+    hdl=(cf[0][4], cf[0][5])
+    nam=('CTL', 'CC')  
+    zw = ax[0, -1].get_position()
+    legax = fig.add_axes([zw.x0, zw.y0+zw.height*1.4, zw.width, .01])
+    legax.axis('off')
+    leg=legax.legend( hdl, nam, loc='lower center', title='Mean f-ratio:')
+    leg._legend_box.align = "left"
+
     for zax in fig.axes : zax.tick_params(color='dimgrey')
-    dirfig='/gpfswork/rech/dyk/rdyk004/MY_FIG_PYTHON3/'
+    dirfig='/gpfswork/rech/eee/rdyk004/MY_FIG_PYTHON3/'
     suffig='main_article_gyre_pp_supfig_v2_'
-    print("Figure saved: ", dirfig+suffig+savefig)
     fig.savefig(dirfig+suffig+savefig)
+    print("Figure saved: ", dirfig+suffig+savefig)
+    plt.close()
+
+##################################################
+# END SF3 OLD
+##################################################
+
+##################################################
+# SF3
+##################################################
+if plot_sf3 : 
+    print(">>> plot_sf3 <<<")
+
+    savefig = 'sf3.png'
+    fdir  = '/gpfswork/rech/eee/rdyk004/GYRE_XML/'          
+    fsuf='_1y_01010101_01701230_diad_T.xml'
+    res  = ['1', '1_KL2000', '1_KL500', '1_KGM500_KL500', '1_KGM2000_KL2000', '9', '27']
+    # res  = ['1', '1_KL2000', '1_KL500', '1_KGM500_KL500', '1_KGM2000_KL2000', '1', '1'] # TEST
+    data2plot={}
+
+    ####################
+    # MAPS ∆NP ∆RP
+    ####################
+
+    sdate  = '0166-01-01'
+    edate  = '0170-12-31'
+    var={'NP':'FNO3PHY',
+         'RP':'FNH4PHY'}
+
+    for vres in res :
+        if vres in ['9', '27'] : zwmesh = reading.read_mesh('/gpfswork/rech/eee/rdyk004/MESH/mesh_mask_R'+vres+'.nc')
+        else :  zwmesh = reading.read_mesh('/gpfswork/rech/eee/rdyk004/MESH/mesh_mask_R1.nc' )
+        # zwmesh = reading.read_mesh('/gpfswork/rech/eee/rdyk004/MESH/mesh_mask_R1.nc' ) # TEST
+        data2plot['R'+vres] = {'lon':zwmesh['lonT'], 'lat':zwmesh['latT']}
+        for vvv in ['NP', 'RP'] :
+            zw = {}
+            for vsim in ['CTL', 'CC'] : 
+                fff = fdir + vsim + vres + fsuf
+                zw2  = reading.read_ncdf(var[vvv], fff, time=(sdate, edate))
+                zw2  = zw2['data']
+                # remove nitrification from NP and add to RP
+                zwnit = reading.read_ncdf('FNH4NO3', fff, time=(sdate, edate))
+                zwnit = zwnit['data']
+                if   vvv == 'NP' : zw2 = zw2-zwnit
+                elif vvv == 'RP' : zw2 = zw2+zwnit
+                else : exit('vvv must be NP or RP')
+                # DC
+                zw2  = averaging.tmean(zw2, zwmesh, dim='tzyx')
+                zw[vsim]  = averaging.zmean(zw2, zwmesh, dim='zyx', zmax=100, integral=True)
+                zw2 = averaging.zmean(zw2, zwmesh, grid='T', dim='zyx', zmax=100, integral=True) 
+                zw2 = averaging.ymean(zw2, zwmesh, grid='T', dim='yx', ymin=35, ymax=45) 
+                zw2 = averaging.xmean(zw2, zwmesh, grid='T', dim='x')                
+                zwnit = averaging.tmean(zwnit, zwmesh, dim='tzyx')
+                zwnit = averaging.zmean(zwnit, zwmesh, grid='T', dim='zyx', zmax=100, integral=True) 
+                zwnit = averaging.ymean(zwnit, zwmesh, grid='T', dim='yx', ymin=35, ymax=45) 
+                zwnit = averaging.xmean(zwnit, zwmesh, grid='T', dim='x')
+                print(">>> "+vsim+vres)
+                print(vvv+": "+str(zw2))
+                print("NIT: "+str(zwnit))
+            #
+            data2plot['R'+vres]['m'+vvv] = zw['CC'] - zw['CTL']
+        #
+        zw = data2plot['R'+vres]['mNP'] + data2plot['R'+vres]['mRP']
+        for vvv in ['NP', 'RP'] : data2plot['R'+vres]['m'+vvv] =  data2plot['R'+vres]['m'+vvv] / np.abs(zw) * 100
+    #
+
+    ####################
+    # TIMSERIES ∆NP ∆RP
+    ####################
+
+    sdate  = '0101-01-01'
+    edate  = '0170-12-31'
+    var={'NP':'FNO3PHY',
+         'RP':'FNH4PHY'}
+
+    for vres in res :
+        if vres in ['9', '27'] : zwmesh = reading.read_mesh('/gpfswork/rech/eee/rdyk004/MESH/mesh_mask_R'+vres+'.nc')
+        else :  zwmesh = reading.read_mesh('/gpfswork/rech/eee/rdyk004/MESH/mesh_mask_R1.nc' )
+        # zwmesh = reading.read_mesh('/gpfswork/rech/eee/rdyk004/MESH/mesh_mask_R1.nc' ) # TEST
+        for vvv in ['NP', 'RP'] :
+            zw = {}
+            for vsim in ['CTL', 'CC'] : 
+                fff = fdir + vsim + vres + fsuf
+                zw2  = reading.read_ncdf(var[vvv], fff, time=(sdate, edate))
+                zw2  = zw2['data']
+                # DC
+                zwnit = reading.read_ncdf('FNH4NO3', fff, time=(sdate, edate))
+                if   vvv == 'NP' : zw2 = zw2-zwnit['data']
+                elif vvv == 'RP' : zw2 = zw2+zwnit['data']
+                else : exit('vvv must be NP or RP')
+                # DC
+                zw2 = averaging.zmean(zw2, zwmesh, grid='T', dim='tzyx', zmax=100, integral=True) 
+                zw2 = averaging.ymean(zw2, zwmesh, grid='T', dim='tyx', ymin=35, ymax=45) 
+                zw2 = averaging.xmean(zw2, zwmesh, grid='T', dim='tx')
+                zw[vsim] = zw2
+            #
+            data2plot['R'+vres]['t'+vvv] = zw['CC'] - zw['CTL']
+        #
+    #
+
+    ####################
+    # TIMSERIES F-RATIO
+    ####################
+
+    sdate  = '0101-01-01'
+    edate  = '0170-12-31'
+    var={'NP':'FNO3PHY',
+         'RP':'FNH4PHY'}
+
+    for vres in res :
+        if vres in ['9', '27'] : zwmesh = reading.read_mesh('/gpfswork/rech/eee/rdyk004/MESH/mesh_mask_R'+vres+'.nc')
+        else :  zwmesh = reading.read_mesh('/gpfswork/rech/eee/rdyk004/MESH/mesh_mask_R1.nc' )
+        # zwmesh = reading.read_mesh('/gpfswork/rech/eee/rdyk004/MESH/mesh_mask_R1.nc' ) # TEST
+        for vsim in ['CTL', 'CC'] :
+            zw = {}
+            for vvv in ['NP', 'RP'] :
+                fff = fdir + vsim + vres + fsuf
+                zw2  = reading.read_ncdf(var[vvv], fff, time=(sdate, edate))
+                zw2  = zw2['data']
+                # DC
+                zwnit = reading.read_ncdf('FNH4NO3', fff, time=(sdate, edate))
+                if   vvv == 'NP' : zw2 = zw2-zwnit['data']
+                elif vvv == 'RP' : zw2 = zw2+zwnit['data']
+                else : exit('vvv must be NP or RP')
+                # DC
+                zw2 = averaging.zmean(zw2, zwmesh, grid='T', dim='tzyx', zmax=100, integral=True) 
+                zw2 = averaging.ymean(zw2, zwmesh, grid='T', dim='tyx', ymin=35, ymax=45) 
+                zw2 = averaging.xmean(zw2, zwmesh, grid='T', dim='tx')
+                zw[vvv] = zw2
+            #
+            data2plot['R'+vres]['f'+vsim] = zw['NP'] / (zw['NP'] + zw['RP'])
+            print(">>> "+vsim+vres)
+            print("f-ratio: "+str(data2plot['R'+vres]['f'+vsim][-1]))
+        #
+    #
+
+
+    ####################
+    # PLOT DATA
+    ####################
+
+    infact  = 1/2.54
+    nrow, ncol = 7, 4
+    fsize   = (ncol*3*infact, nrow*3*infact) #(width, height)
+    fig, ax = plt.subplots(nrow, ncol, sharex='col',figsize=fsize)
+
+    ttls={'R1'               :'\nk$_{gm}$=1e$^3$, k$_{iso}$=1e$^3$', \
+          'R1_KL500'         :'\nk$_{gm}$=1e$^3$, k$_{iso}$=500'      , \
+          'R1_KL2000'        :'\nk$_{gm}$=1e$^3$, k$_{iso}$=2e$^3$', \
+          'R1_KGM500_KL500'  :'\nk$_{gm}$=500, k$_{iso}$=500'      , \
+          'R1_KGM2000_KL2000':'\nk$_{gm}$=2e$^3$, k$_{iso}$=2e$^3$', \
+          'R9':'', 'R27':''}
+    note={'R1'               :'1°', \
+          'R1_KL500'         :'1°', \
+          'R1_KL2000'        :'1°', \
+          'R1_KGM500_KL500'  :'1°', \
+          'R1_KGM2000_KL2000':'1°', \
+          'R9':'1/9°', 'R27':'1/27°'}
+    subnum=list('abcdefghijklmnopqrstuvwxyz')
+    subnum=subnum+list(map('a'.__add__,subnum))
+    subnum.reverse()
+
+    def plotdata(zaxrow, zres) :
+        zdat=data2plot[zres]
+        #___________________
+        # MAPS
+        aa  = np.linspace(-100, 0, 6)
+        bb  = np.linspace(0, 100, 6)
+        lev = np.concatenate((aa[:-1], bb))
+        X, Y = zdat['lon'], zdat['lat']
+        # NP
+        zcfNP = zaxrow[0].contourf(X, Y, zdat['mNP'], levels=lev, cmap='PiYG', extend='both')
+        ttt='('+subnum.pop()+') New NPP'+ttls[zres]
+        plotting.make_XY_axis(zaxrow[0], title=ttt)
+        zaxrow[0].label_outer()
+        zaxrow[0].annotate(note[zres], xy=(-83, 23), \
+                        bbox=dict(boxstyle="round", fc="1"))
+        # RP
+        zcfRP = zaxrow[1].contourf(X, Y, zdat['mRP'], levels=lev, cmap='PiYG', extend='both')
+        ttt='('+subnum.pop()+') Reg NPP'+ttls[zres]
+        plotting.make_XY_axis(zaxrow[1], title=ttt)
+        zaxrow[1].label_outer()
+        zaxrow[1].annotate(note[zres], xy=(-83, 23), \
+                        bbox=dict(boxstyle="round", fc="1"))
+        #___________________
+        # TIMESERIES NP RP
+        X = np.arange(70)+1
+        Y1 = zdat['tRP']
+        Y2 = Y1 + zdat['tNP']
+        zllRP   =  zaxrow[2].fill_between(X, Y1    , color='0')
+        zllNP   =  zaxrow[2].fill_between(X, Y1, Y2, color='.5')
+        ttt='('+subnum.pop()+') ' + ttls[zres]
+        zaxrow[2].set_title(ttt, loc='left')
+        zaxrow[2].set_ylim((-1., 0.1))
+        zaxrow[2].locator_params(axis='y', nbins=4)
+        zaxrow[2].annotate(note[zres], xy=(7, -.85), \
+                        bbox=dict(boxstyle="round", fc="1"))
+        #___________________
+        # TIMESERIES F-RATIO
+        X = np.arange(70)+1
+        Y1 = zdat['fCTL']
+        Y2 = zdat['fCC']
+        zllfCT,  =  zaxrow[3].plot(X, Y1, color='0', ls='--', dashes=[1.5, .7])
+        zllfCC,  =  zaxrow[3].plot(X, Y2, color='0', ls='-' )
+        ttt='('+subnum.pop()+') ' + ttls[zres]
+        zaxrow[3].set_title(ttt, loc='left')
+        zaxrow[3].set_ylim((0, 1))
+        zaxrow[3].locator_params(axis='y', nbins=4)
+        zaxrow[3].annotate(note[zres], xy=(7, .136), \
+                        bbox=dict(boxstyle="round", fc="1"))
+        # zaxrow[3].annotate(note[zres], xy=(7, .527), \
+        #                 bbox=dict(boxstyle="round", fc="1"))
+        return (zcfNP, zcfRP, zllNP, zllRP, zllfCT, zllfCC)
+    #
+
+    cf = np.zeros_like(ax[:, 0])
+    irow = 0
+    rrr = ['1_KGM500_KL500', '1_KL500', '1' ,'1_KL2000','1_KGM2000_KL2000', '9', '27']
+    for zres in rrr :
+        cf[irow] = plotdata(ax[irow], 'R'+zres)
+        irow+=1
+    #
+    fig.subplots_adjust(hspace=.4)
+
+    cbtitle = 'Percent of NPP change '
+    zw1 = ax[0, 0].get_position()
+    zw2 = ax[0, 1].get_position()
+    nwidth = zw1.width*1.5
+    nx0 = (zw1.x0+zw1.width+zw2.x0)/2 - nwidth/2
+    ny0 = zw1.y0+zw1.height*1.4
+    cbar_ax = fig.add_axes([nx0, ny0, nwidth, 0.01])
+    fig.colorbar(cf[0][0], cax=cbar_ax, orientation='horizontal', ticklocation='top', label=cbtitle)
+
+    for zax in ax[:-1, :].flatten() : zax.tick_params(bottom=False)
+    for zax in ax[:, 1].flatten() : zax.tick_params(left=False)
+    for zax in ax[:, -2].flatten() :
+        zax.set_ylabel('[mmolN/m$^2$/d]')
+        zw = zax.get_position()
+        zax.set_position([zw.x0+.09, zw.y0, zw.width, zw.height])
+    #
+    for zax in ax[:, -1].flatten() :
+        zax.yaxis.set_ticks_position('right')
+        zax.yaxis.set_label_position('right')
+        zw = zax.get_position()
+        zax.set_position([zw.x0+.11, zw.y0, zw.width, zw.height])
+    #
+    ax[-1, -2].set_xlim(1, 71)
+    ax[-1, -2].xaxis.set_ticks([1, 71])
+    ax[-1, -2].xaxis.set_ticklabels(['0', '70 years'])
+    ax[-1, -1].set_xlim(1, 71)
+    ax[-1, -1].xaxis.set_ticks([1, 71])
+    ax[-1, -1].xaxis.set_ticklabels(['0', '70 years'])
+
+    hdl=(cf[0][3], cf[0][2])
+    nam=('New NPP', 'Reg NPP')  
+    zw = ax[0, -2].get_position()
+    legax = fig.add_axes([zw.x0, zw.y0+zw.height*1.4, zw.width, .01])
+    legax.axis('off')
+    leg=legax.legend( hdl, nam, loc='lower center', title='Mean NPP change:')
+    leg._legend_box.align = "left"
+
+    hdl=(cf[0][4], cf[0][5])
+    nam=('CTL', 'CC')  
+    zw = ax[0, -1].get_position()
+    legax = fig.add_axes([zw.x0, zw.y0+zw.height*1.4, zw.width, .01])
+    legax.axis('off')
+    leg=legax.legend( hdl, nam, loc='lower center', title='Mean f-ratio:')
+    leg._legend_box.align = "left"
+
+    for zax in fig.axes : zax.tick_params(color='dimgrey')
+    dirfig='/gpfswork/rech/eee/rdyk004/MY_FIG_PYTHON3/'
+    suffig='main_article_gyre_pp_supfig_v2_'
+    fig.savefig(dirfig+suffig+savefig)
+    print("Figure saved: ", dirfig+suffig+savefig)
     plt.close()
 
 ##################################################
@@ -535,9 +870,10 @@ if plot_sf3 :
 # SF4
 ##################################################
 if plot_sf4 :
+    print(">>> plot_sf4 <<<")
 
     savefig = 'sf4.png'
-    fdir  = '/gpfswork/rech/dyk/rdyk004/GYRE_XML/'          
+    fdir  = '/gpfswork/rech/eee/rdyk004/GYRE_XML/'          
     fsuf  = '_1y_01010101_01701230_ptrc_T.xml'
     sdate  = '0166-01-01'
     edate  = '0170-12-31'
@@ -550,8 +886,8 @@ if plot_sf4 :
     ####################
 
     for vres in res :
-        if vres in ['9', '27'] : zwmesh = reading.read_mesh('/gpfswork/rech/dyk/rdyk004/MESH/mesh_mask_R'+vres+'.nc')
-        else :  zwmesh = reading.read_mesh('/gpfswork/rech/dyk/rdyk004/MESH/mesh_mask_R1.nc' )
+        if vres in ['9', '27'] : zwmesh = reading.read_mesh('/gpfswork/rech/eee/rdyk004/MESH/mesh_mask_R'+vres+'.nc')
+        else :  zwmesh = reading.read_mesh('/gpfswork/rech/eee/rdyk004/MESH/mesh_mask_R1.nc' )
         data2plot['R'+vres]={'lat':zwmesh['latT'][:, 5], 'dep':zwmesh['depT']}
         for vsim in ['CTL', 'CC'] : 
             fff = fdir + vsim + vres + fsuf
@@ -580,11 +916,11 @@ if plot_sf4 :
     lev  = {'CTL':levC, 'CC':levC, 'DELTA':levD}
     cmap = {'CTL':'viridis', 'CC':'viridis', 'DELTA':'PiYG'}
     ext  = {'CTL':'max', 'CC':'max', 'DELTA':'both'}
-    ttls={'R1'               :'\nk$_{gm}$=1e$^3$, k$_{redi}$=1e$^3$', \
-          'R1_KL500'         :'\nk$_{gm}$=1e$^3$, k$_{redi}$=500'      , \
-          'R1_KL2000'        :'\nk$_{gm}$=1e$^3$, k$_{redi}$=2e$^3$', \
-          'R1_KGM500_KL500'  :'\nk$_{gm}$=500, k$_{redi}$=500'      , \
-          'R1_KGM2000_KL2000':'\nk$_{gm}$=2e$^3$, k$_{redi}$=2e$^3$', \
+    ttls={'R1'               :'\nk$_{gm}$=1e$^3$, k$_{iso}$=1e$^3$', \
+          'R1_KL500'         :'\nk$_{gm}$=1e$^3$, k$_{iso}$=500'      , \
+          'R1_KL2000'        :'\nk$_{gm}$=1e$^3$, k$_{iso}$=2e$^3$', \
+          'R1_KGM500_KL500'  :'\nk$_{gm}$=500, k$_{iso}$=500'      , \
+          'R1_KGM2000_KL2000':'\nk$_{gm}$=2e$^3$, k$_{iso}$=2e$^3$', \
           'R9':'', 'R27':''}
     note={'R1'               :'1°', \
           'R1_KL500'         :'1°', \
@@ -629,7 +965,7 @@ if plot_sf4 :
     #
     fig.subplots_adjust(hspace=.4)
 
-    cbtitle = 'NO3 [mmolN/m$^3$]'
+    cbtitle = 'NO$_3$ [mmol$\,$N$\,$m$^{-3}$]'
     zw1 = ax[0, 0].get_position()
     zw2 = ax[0, 1].get_position()
     nwidth = zw1.width*1.5
@@ -638,7 +974,7 @@ if plot_sf4 :
     cbar_ax = fig.add_axes([nx0, ny0, nwidth, 0.01])
     fig.colorbar(cf[0,0], cax=cbar_ax, orientation='horizontal', ticklocation='top', label=cbtitle)
 
-    cbtitle = '∆NO3 [mmolN/m$^3$]'
+    cbtitle = '∆NO$_3$ [mmol$\,$N$\,$m$^{-3}$]'
     zw = ax[0, -1].get_position()
     ny0 = zw.y0+zw.height*1.4
     cbar_ax = fig.add_axes([zw.x0, ny0, zw.width, 0.01])
@@ -646,7 +982,7 @@ if plot_sf4 :
                  label=cbtitle, ticks=[-4, 0, 4])
 
     for zax in fig.axes : zax.tick_params(color='dimgrey')
-    dirfig='/gpfswork/rech/dyk/rdyk004/MY_FIG_PYTHON3/'
+    dirfig='/gpfswork/rech/eee/rdyk004/MY_FIG_PYTHON3/'
     suffig='main_article_gyre_pp_supfig_v2_'
     fig.savefig(dirfig+suffig+savefig) 
     print("Figure saved: ", dirfig+suffig+savefig)
@@ -660,6 +996,7 @@ if plot_sf4 :
 # SF5
 ##################################################
 if plot_sf5 : 
+    print(">>> plot_sf5 <<<")
 
     savefig='sf5.png'
     r1s = ['1', '1_KL2000', '1_KL500', '1_KGM500_KL500', '1_KGM2000_KL2000']
@@ -674,7 +1011,7 @@ if plot_sf5 :
         return zw[zwsim]
     #    
 
-    fdir = '/gpfswork/rech/dyk/rdyk004/MY_PYTHON3/PCKL/'
+    fdir = '/gpfswork/rech/eee/rdyk004/MY_PYTHON3/PCKL/'
 
     data2process = {}
     
@@ -793,7 +1130,7 @@ if plot_sf5 :
     www = {'adv':1.5, 'vN':1.5, 'wN':1.5, 'ldf':1.5, 'vNgm':.5, 'wNgm':.5}
     sss = {'adv':'-', 'vN':'-', 'wN':'-', 'ldf':'-', 'vNgm':':', 'wNgm':':'}
     aaa = {'adv':.3, 'vN':1, 'wN':1, 'ldf':1, 'vNgm':1, 'wNgm':1}
-    nnn = {'adv':'Total', 'vN':'Meri. adv.', 'wN':'Vert. adv.', 'ldf':'Lat. diff.', \
+    nnn = {'adv':'Total', 'vN':'Meri. adv.', 'wN':'Vert. adv.', 'ldf':'Iso. mix.', \
            'vNgm':'GM adv.', 'wNgm':'GM adv.'}
     note={'R1'               :'1°', \
           'R1_KL500'         :'1°', \
@@ -801,11 +1138,11 @@ if plot_sf5 :
           'R1_KGM500_KL500'  :'1°', \
           'R1_KGM2000_KL2000':'1°', \
           'R9':'1/9°', 'R27':'1/27°'}
-    ttls={'R1'               :'k$_{gm}$=1e$^3$, k$_{redi}$=1e$^3$', \
-          'R1_KL500'         :'k$_{gm}$=1e$^3$, k$_{redi}$=500', \
-          'R1_KL2000'        :'k$_{gm}$=1e$^3$, k$_{redi}$=2e$^3$', \
-          'R1_KGM500_KL500'  :'k$_{gm}$=500, k$_{redi}$=500', \
-          'R1_KGM2000_KL2000':'k$_{gm}$=2e$^3$, k$_{redi}$=2e$^3$', \
+    ttls={'R1'               :'k$_{gm}$=1e$^3$, k$_{iso}$=1e$^3$', \
+          'R1_KL500'         :'k$_{gm}$=1e$^3$, k$_{iso}$=500', \
+          'R1_KL2000'        :'k$_{gm}$=1e$^3$, k$_{iso}$=2e$^3$', \
+          'R1_KGM500_KL500'  :'k$_{gm}$=500, k$_{iso}$=500', \
+          'R1_KGM2000_KL2000':'k$_{gm}$=2e$^3$, k$_{iso}$=2e$^3$', \
           'R9':'', 'R27':''}
     def plotdata(zax, zres, zpart) :
         zdat=data2plot[zres][zpart]
@@ -850,7 +1187,7 @@ if plot_sf5 :
         zax.yaxis.set_label_position('right')
     for zax in ax[-1, :].flatten() : 
         zax.set_xlim((-1.5, 3.5))
-        zax.set_xlabel('mmolN/m$^2$/d')
+        zax.set_xlabel('mmol$\,$N$\,$m$^{-2}$d$^{-1}$')
         zax.xaxis.set_ticks([-1.5, 0, 1.5, 3])
     #    
     fig.subplots_adjust(hspace=.5)
@@ -863,7 +1200,7 @@ if plot_sf5 :
     legax.legend( hdl, nam, ncol=5, handlelength=1., loc='lower center')
     
     for zax in fig.axes : zax.tick_params(color='dimgrey')
-    dirfig='/gpfswork/rech/dyk/rdyk004/MY_FIG_PYTHON3/'
+    dirfig='/gpfswork/rech/eee/rdyk004/MY_FIG_PYTHON3/'
     suffig='main_article_gyre_pp_supfig_v2_'
     fig.savefig(dirfig+suffig+savefig) 
     print("Figure saved: ", dirfig+suffig+savefig)
@@ -877,6 +1214,7 @@ if plot_sf5 :
 # SF6
 ##################################################
 if plot_sf6 : 
+    print(">>> plot_sf6 <<<")
 
     savefig='sf6.png'
     r1s = ['1', '1_KL2000', '1_KL500', '1_KGM500_KL500', '1_KGM2000_KL2000']
@@ -891,7 +1229,7 @@ if plot_sf6 :
         return zw[zwsim]
     #    
 
-    fdir = '/gpfswork/rech/dyk/rdyk004/MY_PYTHON3/PCKL/'
+    fdir = '/gpfswork/rech/eee/rdyk004/MY_PYTHON3/PCKL/'
 
     data2process = {}
     
@@ -1021,7 +1359,7 @@ if plot_sf6 :
     www = {'adv':1.5, 'vN':1.5, 'wN':1.5, 'ldf':1.5, 'vNgm':.5, 'wNgm':.5}
     sss = {'adv':'-', 'vN':'-', 'wN':'-', 'ldf':'-', 'vNgm':':', 'wNgm':':'}
     aaa = {'adv':.3, 'vN':1, 'wN':1, 'ldf':1, 'vNgm':1, 'wNgm':1}
-    nnn = {'adv':'Total', 'vN':'Meri. adv.', 'wN':'Vert. adv.', 'ldf':'Lat. diff.', \
+    nnn = {'adv':'Total', 'vN':'Meri. adv.', 'wN':'Vert. adv.', 'ldf':'Iso. mix.', \
            'vNgm':'GM adv.', 'wNgm':'GM adv.'}
     note={'R1'               :'1°', \
           'R1_KL500'         :'1°', \
@@ -1029,11 +1367,11 @@ if plot_sf6 :
           'R1_KGM500_KL500'  :'1°', \
           'R1_KGM2000_KL2000':'1°', \
           'R9':'1/9°', 'R27':'1/27°'}
-    ttls={'R1'               :'k$_{gm}$=1e$^3$, k$_{redi}$=1e$^3$', \
-          'R1_KL500'         :'k$_{gm}$=1e$^3$, k$_{redi}$=500', \
-          'R1_KL2000'        :'k$_{gm}$=1e$^3$, k$_{redi}$=2e$^3$', \
-          'R1_KGM500_KL500'  :'k$_{gm}$=500, k$_{redi}$=500', \
-          'R1_KGM2000_KL2000':'k$_{gm}$=2e$^3$, k$_{redi}$=2e$^3$', \
+    ttls={'R1'               :'k$_{gm}$=1e$^3$, k$_{iso}$=1e$^3$', \
+          'R1_KL500'         :'k$_{gm}$=1e$^3$, k$_{iso}$=500', \
+          'R1_KL2000'        :'k$_{gm}$=1e$^3$, k$_{iso}$=2e$^3$', \
+          'R1_KGM500_KL500'  :'k$_{gm}$=500, k$_{iso}$=500', \
+          'R1_KGM2000_KL2000':'k$_{gm}$=2e$^3$, k$_{iso}$=2e$^3$', \
           'R9':'', 'R27':''}
     def plotdata(zax, zres, zpart) :
         zdat=data2plot[zres][zpart]
@@ -1076,7 +1414,7 @@ if plot_sf6 :
         zax.yaxis.set_ticks_position('right')
         zax.yaxis.set_label_position('right')
     for zax in ax[-1, :].flatten() : 
-        zax.set_xlabel('mmolN/m$^2$/d')
+        zax.set_xlabel('mmol$\,$N$\,$m$^{-2}$d$^{-1}$')
         zax.set_xlim((-1.7, .7))
         zax.xaxis.set_ticks([ -1.4, -.7, 0, .7])
     #    
@@ -1090,7 +1428,7 @@ if plot_sf6 :
     legax.legend( hdl, nam, ncol=5, handlelength=1., loc='lower center')
     
     for zax in fig.axes : zax.tick_params(color='dimgrey')
-    dirfig='/gpfswork/rech/dyk/rdyk004/MY_FIG_PYTHON3/'
+    dirfig='/gpfswork/rech/eee/rdyk004/MY_FIG_PYTHON3/'
     suffig='main_article_gyre_pp_supfig_v2_'
     fig.savefig(dirfig+suffig+savefig)
     print("Figure saved: ", dirfig+suffig+savefig)
@@ -1104,6 +1442,7 @@ if plot_sf6 :
 # SF7
 ##################################################
 if plot_sf7 : 
+    print(">>> plot_sf7 <<<")
 
     savefig='sf7.png'
     r1s = ['1', '1_KL2000', '1_KL500', '1_KGM500_KL500', '1_KGM2000_KL2000']
@@ -1118,7 +1457,7 @@ if plot_sf7 :
         return zw[zwsim]
     #    
 
-    fdir = '/gpfswork/rech/dyk/rdyk004/MY_PYTHON3/PCKL/'
+    fdir = '/gpfswork/rech/eee/rdyk004/MY_PYTHON3/PCKL/'
 
     data2process = {}
     
@@ -1137,7 +1476,6 @@ if plot_sf7 :
         data2process['R'+zr1]['CCxCTL'] = open_pckl(zwin, 'R'+zr1)
 
     #
-    embed()
     
     #___________________
     # R9 TOTAL NO3 BUDGET
@@ -1274,7 +1612,7 @@ if plot_sf7 :
     fig, ax = plt.subplots(nrow, ncol, sharey='row', sharex='col', figsize=fsize)
 
     ccc = {'dvN':'k', 'vdN':'firebrick', 'Ndv':'mediumblue', 'dvdN':'.7'}
-    nnn = {'dvN':'$\Delta$(v$\cdot$NO3)', 'vdN':'$\Delta$Nitrate', \
+    nnn = {'dvN':'$\Delta$($\mathbf{u}\cdot$N)', 'vdN':'$\Delta$Nitrate', \
            'Ndv':'$\Delta$Circulation', 'dvdN':'Non-linear $\Delta$'}
     ooo = {'dvN':10, 'vdN':15, 'Ndv':20, 'dvdN':5}
     note={'R1'               :'1°', \
@@ -1283,11 +1621,11 @@ if plot_sf7 :
           'R1_KGM500_KL500'  :'1°', \
           'R1_KGM2000_KL2000':'1°', \
           'R9':'1/9°', 'R27':'1/27°'}
-    ttls={'R1'               :'k$_{gm}$=1e$^3$, k$_{redi}$=1e$^3$', \
-          'R1_KL500'         :'k$_{gm}$=1e$^3$, k$_{redi}$=500', \
-          'R1_KL2000'        :'k$_{gm}$=1e$^3$, k$_{redi}$=2e$^3$', \
-          'R1_KGM500_KL500'  :'k$_{gm}$=500, k$_{redi}$=500', \
-          'R1_KGM2000_KL2000':'k$_{gm}$=2e$^3$, k$_{redi}$=2e$^3$', \
+    ttls={'R1'               :'k$_{gm}$=1e$^3$, k$_{iso}$=1e$^3$', \
+          'R1_KL500'         :'k$_{gm}$=1e$^3$, k$_{iso}$=500', \
+          'R1_KL2000'        :'k$_{gm}$=1e$^3$, k$_{iso}$=2e$^3$', \
+          'R1_KGM500_KL500'  :'k$_{gm}$=500, k$_{iso}$=500', \
+          'R1_KGM2000_KL2000':'k$_{gm}$=2e$^3$, k$_{iso}$=2e$^3$', \
           'R9':'', 'R27':''}
     subnum=list('abcdefghijklmnopqrstuvwxyz')
     subnum.reverse()
@@ -1331,7 +1669,7 @@ if plot_sf7 :
         zax.yaxis.set_ticks_position('right')
         zax.yaxis.set_label_position('right')
     for zax in ax[-1, :].flatten() : 
-        zax.set_xlabel('mmolN/m$^2$/d')
+        zax.set_xlabel('mmol$\,$N$\,$m$^{-2}$d$^{-1}$')
         zax.set_xlim((-1.7, .7))
         zax.xaxis.set_ticks([ -1.4, -.7, 0, .7])
     #    
@@ -1345,7 +1683,7 @@ if plot_sf7 :
     legax.legend( hdl, nam, ncol=5, handlelength=2., loc='lower center')
     
     for zax in fig.axes : zax.tick_params(color='dimgrey')
-    dirfig='/gpfswork/rech/dyk/rdyk004/MY_FIG_PYTHON3/'
+    dirfig='/gpfswork/rech/eee/rdyk004/MY_FIG_PYTHON3/'
     suffig='main_article_gyre_pp_supfig_v2_'
     fig.savefig(dirfig+suffig+savefig)
     print("Figure saved: ", dirfig+suffig+savefig)
@@ -1359,9 +1697,10 @@ if plot_sf7 :
 # SF8
 ##################################################
 if plot_sf8 : 
+    print(">>> plot_sf8 <<<")
 
     savefig='sf8.png'
-    fdir  = '/gpfswork/rech/dyk/rdyk004/GYRE_XML/'          
+    fdir  = '/gpfswork/rech/eee/rdyk004/GYRE_XML/'          
     sdate = '0166-01-01'
     edate = '0170-12-31'
     res = ['1', '1_KL2000', '1_KL500', '1_KGM500_KL500', '1_KGM2000_KL2000', \
@@ -1387,9 +1726,9 @@ if plot_sf8 :
             fff = fdir + zksim + zkres + fsuf
             zw = reading.read_ncdf(var, fff, time = (sdate, edate))
             if zkres in ['9', '27'] :
-                zwmesh = reading.read_mesh('/gpfswork/rech/dyk/rdyk004/MESH/mesh_mask_R'+zkres+'.nc')
-            else :  zwmesh = reading.read_mesh('/gpfswork/rech/dyk/rdyk004/MESH/mesh_mask_R1.nc' )
-            # zwmesh = reading.read_mesh('/gpfswork/rech/dyk/rdyk004/MESH/mesh_mask_R1.nc' ) # TEST
+                zwmesh = reading.read_mesh('/gpfswork/rech/eee/rdyk004/MESH/mesh_mask_R'+zkres+'.nc')
+            else :  zwmesh = reading.read_mesh('/gpfswork/rech/eee/rdyk004/MESH/mesh_mask_R1.nc' )
+            # zwmesh = reading.read_mesh('/gpfswork/rech/eee/rdyk004/MESH/mesh_mask_R1.nc' ) # TEST
             zw = zw['data']
             zw = averaging.tmean(zw, zwmesh, dim='tzyx')
             zw1 = averaging.ymean(zw, zwmesh, dim='zyx', ymin=lat1, ymax=lat2)
@@ -1431,9 +1770,9 @@ if plot_sf8 :
             fff = fdir + zksim + zkres + fsuf
             zw = reading.read_ncdf(var, fff, time = (sdate, edate))
             if zkres in ['9', '27'] :
-                zwmesh = reading.read_mesh('/gpfswork/rech/dyk/rdyk004/MESH/mesh_mask_R'+zkres+'.nc')
-            else :  zwmesh = reading.read_mesh('/gpfswork/rech/dyk/rdyk004/MESH/mesh_mask_R1.nc' )
-            # zwmesh = reading.read_mesh('/gpfswork/rech/dyk/rdyk004/MESH/mesh_mask_R1.nc' ) # TEST
+                zwmesh = reading.read_mesh('/gpfswork/rech/eee/rdyk004/MESH/mesh_mask_R'+zkres+'.nc')
+            else :  zwmesh = reading.read_mesh('/gpfswork/rech/eee/rdyk004/MESH/mesh_mask_R1.nc' )
+            # zwmesh = reading.read_mesh('/gpfswork/rech/eee/rdyk004/MESH/mesh_mask_R1.nc' ) # TEST
             zw = zw['data']
             zw = averaging.tmean(zw, zwmesh, dim='tzyx', grid='W')
             zw = averaging.ymean(zw, zwmesh, dim='zyx', ymin=lat1, ymax=lat2, grid='W')
@@ -1467,9 +1806,9 @@ if plot_sf8 :
             fff = fdir + zksim + zkres + fsuf
             zw = reading.read_ncdf(var, fff, time = (sdate, edate))
             if zkres in ['9', '27'] :
-                zwmesh = reading.read_mesh('/gpfswork/rech/dyk/rdyk004/MESH/mesh_mask_R'+zkres+'.nc')
-            else :  zwmesh = reading.read_mesh('/gpfswork/rech/dyk/rdyk004/MESH/mesh_mask_R1.nc' )
-            # zwmesh = reading.read_mesh('/gpfswork/rech/dyk/rdyk004/MESH/mesh_mask_R1.nc' ) # TEST
+                zwmesh = reading.read_mesh('/gpfswork/rech/eee/rdyk004/MESH/mesh_mask_R'+zkres+'.nc')
+            else :  zwmesh = reading.read_mesh('/gpfswork/rech/eee/rdyk004/MESH/mesh_mask_R1.nc' )
+            # zwmesh = reading.read_mesh('/gpfswork/rech/eee/rdyk004/MESH/mesh_mask_R1.nc' ) # TEST
             zw = zw['data']
             zw = averaging.tmean(zw, zwmesh, dim='tzyx', grid='V')
             zw = interpolating.yinterpol(zw, zwmesh, lat1, dim='zyx', grid='V')
@@ -1502,9 +1841,9 @@ if plot_sf8 :
         data2plot['N2 GSP'][zksim] = {}
         for zkres in res :
             if zkres in ['9', '27'] :
-                zwmesh = reading.read_mesh('/gpfswork/rech/dyk/rdyk004/MESH/mesh_mask_R'+zkres+'.nc')
-            else :  zwmesh = reading.read_mesh('/gpfswork/rech/dyk/rdyk004/MESH/mesh_mask_R1.nc' )
-            # zwmesh = reading.read_mesh('/gpfswork/rech/dyk/rdyk004/MESH/mesh_mask_R1.nc' ) # TEST
+                zwmesh = reading.read_mesh('/gpfswork/rech/eee/rdyk004/MESH/mesh_mask_R'+zkres+'.nc')
+            else :  zwmesh = reading.read_mesh('/gpfswork/rech/eee/rdyk004/MESH/mesh_mask_R1.nc' )
+            # zwmesh = reading.read_mesh('/gpfswork/rech/eee/rdyk004/MESH/mesh_mask_R1.nc' ) # TEST
             fff = fdir + zksim + zkres + fsuf
             zw  = reading.read_ncdf(varT, fff, time = (sdate, edate))
             zwT = zw['data']
@@ -1558,21 +1897,21 @@ if plot_sf8 :
 
     subnum=list('abcdefghijklmnopqrstuvwxyz')
     subnum.reverse()
-    ttls={'NO3 GSP' : 'NO3 GSP', \
-          'NO3 35N' : 'NO3 35°N', \
+    ttls={'NO3 GSP' : 'NO$_3$ GSP', \
+          'NO3 35N' : 'NO$_3$ 35°N', \
           'W GSP'   : 'Upw. vel.', \
           'V 35N'   : 'Northw. vel.', \
           'N2 GSP'  : 'Stratif.'}
-    units={'NO3 GSP' : '[mmolN/m$^3$]', \
-           'NO3 35N' : '[mmolN/m$^3$]', \
-           'W GSP'   : '[m/d]', \
-           'V 35N'   : '[m/d]', \
+    units={'NO3 GSP' : '[mmol$\,$N$\,$m$^{-3}$]', \
+           'NO3 35N' : '[mmol$\,$N$\,$m$^{-3}$]', \
+           'W GSP'   : '[m$\,$d$^{-1}$]', \
+           'V 35N'   : '[m$\,$d$^{-1}$]', \
            'N2 GSP'  : '[s$^{-2}$]'}
-    nnn = {'R1'               :'1°, k$_{gm}$=1e$^3$\nk$_{redi}$=1e$^3$' , \
-           'R1_KL500'         :'1°, k$_{gm}$=1e$^3$\nk$_{redi}$=500'       , \
-           'R1_KL2000'        :'1°, k$_{gm}$=1e$^3$\nk$_{redi}$=2e$^3$' , \
-           'R1_KGM500_KL500'  :'1°, k$_{gm}$=500\nk$_{redi}$=500'       , \
-           'R1_KGM2000_KL2000':'1°, k$_{gm}$=2e$^3$\nk$_{redi}$=2e$^3$' , \
+    nnn = {'R1'               :'1°, k$_{gm}$=1e$^3$\nk$_{iso}$=1e$^3$' , \
+           'R1_KL500'         :'1°, k$_{gm}$=1e$^3$\nk$_{iso}$=500'       , \
+           'R1_KL2000'        :'1°, k$_{gm}$=1e$^3$\nk$_{iso}$=2e$^3$' , \
+           'R1_KGM500_KL500'  :'1°, k$_{gm}$=500\nk$_{iso}$=500'       , \
+           'R1_KGM2000_KL2000':'1°, k$_{gm}$=2e$^3$\nk$_{iso}$=2e$^3$' , \
            'AVG1':'1° avg $\pm$ st. dev.', 'R9':'1/9°', 'R27':'1/27°'}
     www = {'R1'               :1., \
            'R1_KL500'         :1., \
@@ -1636,7 +1975,7 @@ if plot_sf8 :
     legax.legend( hdl, nam, ncol=3, handlelength=2., loc='lower center')
     
     for zax in fig.axes : zax.tick_params(color='dimgrey')
-    dirfig='/gpfswork/rech/dyk/rdyk004/MY_FIG_PYTHON3/'
+    dirfig='/gpfswork/rech/eee/rdyk004/MY_FIG_PYTHON3/'
     suffig='main_article_gyre_pp_supfig_v2_'
     fig.savefig(dirfig+suffig+savefig)
     print("Figure saved: ", dirfig+suffig+savefig)
@@ -1651,9 +1990,10 @@ if plot_sf8 :
 ##################################################
 
 if plot_sf9 : 
+    print(">>> plot_sf9 <<<")
 
     savefig = 'sf9.png'
-    fdir  = '/gpfswork/rech/dyk/rdyk004/GYRE_XML/'          
+    fdir  = '/gpfswork/rech/eee/rdyk004/GYRE_XML/'          
     fsuf='_1m_01010101_01701230_grid_T.xml'
     res  = ['1', '1_KL2000', '1_KL500', '1_KGM500_KL500', '1_KGM2000_KL2000', '9', '27']
     # res  = ['1', '1_KL2000', '1_KL500', '1_KGM500_KL500', '1_KGM2000_KL2000', '1', '1'] # TEST
@@ -1666,8 +2006,8 @@ if plot_sf9 :
     ####################
 
     for vres in res :
-        if vres in ['9', '27'] : zwmesh = reading.read_mesh('/gpfswork/rech/dyk/rdyk004/MESH/mesh_mask_R'+vres+'.nc')
-        else :  zwmesh = reading.read_mesh('/gpfswork/rech/dyk/rdyk004/MESH/mesh_mask_R1.nc' )
+        if vres in ['9', '27'] : zwmesh = reading.read_mesh('/gpfswork/rech/eee/rdyk004/MESH/mesh_mask_R'+vres+'.nc')
+        else :  zwmesh = reading.read_mesh('/gpfswork/rech/eee/rdyk004/MESH/mesh_mask_R1.nc' )
         lon, lat = zwmesh['lonT'], zwmesh['latT']
         data2plot['R'+vres] = { 'MAP':{'lon':lon, 'lat':lat}, 'DIS':{} }
         zw = {}
@@ -1699,11 +2039,11 @@ if plot_sf9 :
     fsize   = (ncol*3*infact, nrow*3*infact) #(width, height)
     fig, ax = plt.subplots(nrow, ncol, sharex='col',figsize=fsize)
 
-    ttls={'R1'               :'k$_{gm}$=1e$^3$, k$_{redi}$=1e$^3$', \
-          'R1_KL500'         :'k$_{gm}$=1e$^3$, k$_{redi}$=500'      , \
-          'R1_KL2000'        :'k$_{gm}$=1e$^3$, k$_{redi}$=2e$^3$', \
-          'R1_KGM500_KL500'  :'k$_{gm}$=500, k$_{redi}$=500'      , \
-          'R1_KGM2000_KL2000':'k$_{gm}$=2e$^3$, k$_{redi}$=2e$^3$', \
+    ttls={'R1'               :'k$_{gm}$=1e$^3$, k$_{iso}$=1e$^3$', \
+          'R1_KL500'         :'k$_{gm}$=1e$^3$, k$_{iso}$=500'      , \
+          'R1_KL2000'        :'k$_{gm}$=1e$^3$, k$_{iso}$=2e$^3$', \
+          'R1_KGM500_KL500'  :'k$_{gm}$=500, k$_{iso}$=500'      , \
+          'R1_KGM2000_KL2000':'k$_{gm}$=2e$^3$, k$_{iso}$=2e$^3$', \
           'R9':'', 'R27':''}
     note={'R1'               :'1°', \
           'R1_KL500'         :'1°', \
@@ -1790,7 +2130,7 @@ if plot_sf9 :
     leg=legax.legend( hdl, nam, loc='lower center', title='Max MLD distribution', ncol=2)
 
     for zax in fig.axes : zax.tick_params(color='dimgrey')
-    dirfig='/gpfswork/rech/dyk/rdyk004/MY_FIG_PYTHON3/'
+    dirfig='/gpfswork/rech/eee/rdyk004/MY_FIG_PYTHON3/'
     suffig='main_article_gyre_pp_supfig_v2_'
     fig.savefig(dirfig+suffig+savefig)
     print("Figure saved: ", dirfig+suffig+savefig)
@@ -1805,9 +2145,10 @@ if plot_sf9 :
 ##################################################
 
 if plot_sf10 : 
+    print(">>> plot_sf10 <<<")
 
     savefig = 'sf10.png'
-    fdir  = '/gpfswork/rech/dyk/rdyk004/GYRE_XML/'          
+    fdir  = '/gpfswork/rech/eee/rdyk004/GYRE_XML/'          
     fsuf  = '_1y_01010101_01701230_grid_T.xml'
     sdate  = '0166-01-01'
     edate  = '0170-12-31'
@@ -1820,8 +2161,8 @@ if plot_sf10 :
     ####################
 
     for vres in res :
-        if vres in ['9', '27'] : zwmesh = reading.read_mesh('/gpfswork/rech/dyk/rdyk004/MESH/mesh_mask_R'+vres+'.nc')
-        else :  zwmesh = reading.read_mesh('/gpfswork/rech/dyk/rdyk004/MESH/mesh_mask_R1.nc' )
+        if vres in ['9', '27'] : zwmesh = reading.read_mesh('/gpfswork/rech/eee/rdyk004/MESH/mesh_mask_R'+vres+'.nc')
+        else :  zwmesh = reading.read_mesh('/gpfswork/rech/eee/rdyk004/MESH/mesh_mask_R1.nc' )
         data2plot['R'+vres]={'lat':zwmesh['latT'][:, 5], 'dep':zwmesh['depT']}
         for vsim in ['CTL', 'CC'] : 
             fff = fdir + vsim + vres + fsuf
@@ -1854,11 +2195,11 @@ if plot_sf10 :
     lev  = {'CTL':levC, 'CC':levC, 'DELTA':levD}
     cmap = {'CTL':'viridis', 'CC':'viridis', 'DELTA':'RdBu_r'}
     ext  = {'CTL':'max', 'CC':'max', 'DELTA':'both'}
-    ttls={'R1'               :'\nk$_{gm}$=1e$^3$, k$_{redi}$=1e$^3$', \
-          'R1_KL500'         :'\nk$_{gm}$=1e$^3$, k$_{redi}$=500'      , \
-          'R1_KL2000'        :'\nk$_{gm}$=1e$^3$, k$_{redi}$=2e$^3$', \
-          'R1_KGM500_KL500'  :'\nk$_{gm}$=500, k$_{redi}$=500'      , \
-          'R1_KGM2000_KL2000':'\nk$_{gm}$=2e$^3$, k$_{redi}$=2e$^3$', \
+    ttls={'R1'               :'\nk$_{gm}$=1e$^3$, k$_{iso}$=1e$^3$', \
+          'R1_KL500'         :'\nk$_{gm}$=1e$^3$, k$_{iso}$=500'      , \
+          'R1_KL2000'        :'\nk$_{gm}$=1e$^3$, k$_{iso}$=2e$^3$', \
+          'R1_KGM500_KL500'  :'\nk$_{gm}$=500, k$_{iso}$=500'      , \
+          'R1_KGM2000_KL2000':'\nk$_{gm}$=2e$^3$, k$_{iso}$=2e$^3$', \
           'R9':'', 'R27':''}
     note={'R1'               :'1°', \
           'R1_KL500'         :'1°', \
@@ -1904,7 +2245,7 @@ if plot_sf10 :
     #
     fig.subplots_adjust(hspace=.4)
 
-    cbtitle = 'Brunt-Vaiasala frequency [1e$^{-5}\cdot s^{-1}$]'
+    cbtitle = 'Brunt-Vaiasala frequency [1e$^{-5}$s$^{-1}$]'
     zw1 = ax[0, 0].get_position()
     zw2 = ax[0, 1].get_position()
     nwidth = zw1.width*1.5
@@ -1913,7 +2254,7 @@ if plot_sf10 :
     cbar_ax = fig.add_axes([nx0, ny0, nwidth, 0.01])
     fig.colorbar(cf[0,0], cax=cbar_ax, orientation='horizontal', ticklocation='top', label=cbtitle)
 
-    cbtitle = 'Change [1e$^{-5}\cdot s^{-1}$]'
+    cbtitle = 'Change [1e$^{-5}$s$^{-1}$]'
     zw = ax[0, -1].get_position()
     ny0 = zw.y0+zw.height*1.4
     cbar_ax = fig.add_axes([zw.x0, ny0, zw.width, 0.01])
@@ -1921,7 +2262,7 @@ if plot_sf10 :
                  label=cbtitle, ticks=[-5, 0, 5])
 
     for zax in fig.axes : zax.tick_params(color='dimgrey')
-    dirfig='/gpfswork/rech/dyk/rdyk004/MY_FIG_PYTHON3/'
+    dirfig='/gpfswork/rech/eee/rdyk004/MY_FIG_PYTHON3/'
     suffig='main_article_gyre_pp_supfig_v2_'
     fig.savefig(dirfig+suffig+savefig)
     print("Figure saved: ", dirfig+suffig+savefig)
@@ -1935,6 +2276,7 @@ if plot_sf10 :
 # SF11
 ##################################################
 if plot_sf11 : 
+    print(">>> plot_sf11 <<<")
 
     savefig='sf11.png'
     
@@ -1942,7 +2284,7 @@ if plot_sf11 :
     # PARAM
     ####################
 
-    fdir = '/gpfswork/rech/dyk/rdyk004/MY_PYTHON3/PCKL/'
+    fdir = '/gpfswork/rech/eee/rdyk004/MY_PYTHON3/PCKL/'
 
     inctl = 'main_no3_budget_horizontal_ctl27_z400m_y1'
     incc  = 'main_no3_budget_horizontal_cc27_z400m_y1'
@@ -2064,7 +2406,7 @@ if plot_sf11 :
         zax.yaxis.set_label_position('right')
     #
 
-    cbtitle = 'NO3 adv. fluxes divergence [mmolN/m$^2$/d]'
+    cbtitle = 'NO$_3$ adv. fluxes divergence [mmol$\,$N$\,$m$^{-2}$d$^{-1}$]'
     zw0 = ax[0, 0].get_position()
     zw2 = ax[0, 2].get_position()
     nx0 = zw0.x0 + 0.5*zw0.width
@@ -2075,7 +2417,7 @@ if plot_sf11 :
                  label=cbtitle, ticklocation='top')
 
     for zax in fig.axes : zax.tick_params(color='dimgrey')
-    dirfig='/gpfswork/rech/dyk/rdyk004/MY_FIG_PYTHON3/'
+    dirfig='/gpfswork/rech/eee/rdyk004/MY_FIG_PYTHON3/'
     suffig='main_article_gyre_pp_supfig_v2_'
     print("Figure saved: ", dirfig+suffig+savefig)
     fig.savefig(dirfig+suffig+savefig)
@@ -2089,10 +2431,11 @@ if plot_sf11 :
 # SF12
 ##################################################
 if plot_sf12 :
+    print(">>> plot_sf12 <<<")
 
     savefig = 'sf12.png'
     savefile='sf12.txt'
-    fdir  = '/gpfswork/rech/dyk/rdyk004/GYRE_XML/'          
+    fdir  = '/gpfswork/rech/eee/rdyk004/GYRE_XML/'          
     fsuf  = '_1y_01010101_01701230_grid_V.xml'
     sdate  = '0166-01-01'
     edate  = '0170-12-31'
@@ -2106,8 +2449,8 @@ if plot_sf12 :
     ####################
 
     for vres in res :
-        if vres in ['9', '27'] : zwmesh = reading.read_mesh('/gpfswork/rech/dyk/rdyk004/MESH/mesh_mask_R'+vres+'.nc')
-        else :  zwmesh = reading.read_mesh('/gpfswork/rech/dyk/rdyk004/MESH/mesh_mask_R1.nc' )
+        if vres in ['9', '27'] : zwmesh = reading.read_mesh('/gpfswork/rech/eee/rdyk004/MESH/mesh_mask_R'+vres+'.nc')
+        else :  zwmesh = reading.read_mesh('/gpfswork/rech/eee/rdyk004/MESH/mesh_mask_R1.nc' )
         data2plot['R'+vres]={'lat':zwmesh['latW'][:, 5], 'dep':zwmesh['depW']}
         for vsim in ['CTL', 'CC'] : 
             fff = fdir + vsim + vres + fsuf
@@ -2128,8 +2471,8 @@ if plot_sf12 :
     # AVG1, STD1
     ####################
     
-    avg1={'mesh':reading.read_mesh('/gpfswork/rech/dyk/rdyk004/MESH/mesh_mask_R1.nc' )}
-    std1={'mesh':reading.read_mesh('/gpfswork/rech/dyk/rdyk004/MESH/mesh_mask_R1.nc' )}
+    avg1={'mesh':reading.read_mesh('/gpfswork/rech/eee/rdyk004/MESH/mesh_mask_R1.nc' )}
+    std1={'mesh':reading.read_mesh('/gpfswork/rech/eee/rdyk004/MESH/mesh_mask_R1.nc' )}
     for vsim in ['CTL', 'CC', 'DELTA'] : 
         zw= []
         for vres in r1s : zw.append(data2plot['R'+vres][vsim])
@@ -2140,7 +2483,7 @@ if plot_sf12 :
                                   mask=data2plot['R1']['CTL'].mask )
     #
 
-    dirfile = '/gpfswork/rech/dyk/rdyk004/MY_PYTHON3/'
+    dirfile = '/gpfswork/rech/eee/rdyk004/MY_PYTHON3/'
     suffile = 'main_article_gyre_pp_supfig_v2_'
     fff = open(dirfile+suffile+savefile, "w+")
 
@@ -2177,7 +2520,7 @@ if plot_sf12 :
     fff.write("                            R9                        ")
     fff.write("\n##################################################\n")
     for vsim in ['CTL', 'CC', 'DELTA'] :
-        zwmesh=reading.read_mesh('/gpfswork/rech/dyk/rdyk004/MESH/mesh_mask_R9.nc' )
+        zwmesh=reading.read_mesh('/gpfswork/rech/eee/rdyk004/MESH/mesh_mask_R9.nc' )
         zdat=data2plot['R9']
         zw1 = interpolating.yinterpol(zdat[vsim], zwmesh, 35, dim='zy')
         zw2 = np.around(interpolating.zinterpol(zw1, zwmesh, 100, dim='z'), decimals=2)
@@ -2193,7 +2536,7 @@ if plot_sf12 :
     fff.write("                           R27                        ")
     fff.write("\n##################################################\n")
     for vsim in ['CTL', 'CC', 'DELTA'] :
-        zwmesh=reading.read_mesh('/gpfswork/rech/dyk/rdyk004/MESH/mesh_mask_R27.nc' )
+        zwmesh=reading.read_mesh('/gpfswork/rech/eee/rdyk004/MESH/mesh_mask_R27.nc' )
         zdat=data2plot['R27']
         zw1 = interpolating.yinterpol(zdat[vsim], zwmesh, 35, dim='zy')
         zw2 = np.around(interpolating.zinterpol(zw1, zwmesh, 100, dim='z'), decimals=2)
@@ -2238,7 +2581,7 @@ if plot_sf12 :
     fff.write("                            R9                        ")
     fff.write("\n##################################################\n")
     for vsim in ['CTL', 'CC', 'DELTA'] :
-        zwmesh=reading.read_mesh('/gpfswork/rech/dyk/rdyk004/MESH/mesh_mask_R9.nc' )
+        zwmesh=reading.read_mesh('/gpfswork/rech/eee/rdyk004/MESH/mesh_mask_R9.nc' )
         zdat=data2plot['R9']
         zw1 = interpolating.zinterpol(zdat[vsim], zwmesh, 400, dim='zy')
         zw2 = np.around(interpolating.yinterpol(zw1, zwmesh, 35, dim='y'), decimals=2)
@@ -2254,7 +2597,7 @@ if plot_sf12 :
     fff.write("                           R27                        ")
     fff.write("\n##################################################\n")
     for vsim in ['CTL', 'CC', 'DELTA'] :
-        zwmesh=reading.read_mesh('/gpfswork/rech/dyk/rdyk004/MESH/mesh_mask_R27.nc' )
+        zwmesh=reading.read_mesh('/gpfswork/rech/eee/rdyk004/MESH/mesh_mask_R27.nc' )
         zdat=data2plot['R27']
         zw1 = interpolating.zinterpol(zdat[vsim], zwmesh, 400, dim='zy')
         zw2 = np.around(interpolating.yinterpol(zw1, zwmesh, 35, dim='y'), decimals=2)
@@ -2283,11 +2626,11 @@ if plot_sf12 :
     lev = np.concatenate((aa[:-1], bb))
     cmap='RdBu'
     ext = 'both'
-    ttls={'R1'               :'\nk$_{gm}$=1e$^3$, k$_{redi}$=1e$^3$', \
-          'R1_KL500'         :'\nk$_{gm}$=1e$^3$, k$_{redi}$=500'      , \
-          'R1_KL2000'        :'\nk$_{gm}$=1e$^3$, k$_{redi}$=2e$^3$', \
-          'R1_KGM500_KL500'  :'\nk$_{gm}$=500, k$_{redi}$=500'      , \
-          'R1_KGM2000_KL2000':'\nk$_{gm}$=2e$^3$, k$_{redi}$=2e$^3$', \
+    ttls={'R1'               :'\nk$_{gm}$=1e$^3$, k$_{iso}$=1e$^3$', \
+          'R1_KL500'         :'\nk$_{gm}$=1e$^3$, k$_{iso}$=500'      , \
+          'R1_KL2000'        :'\nk$_{gm}$=1e$^3$, k$_{iso}$=2e$^3$', \
+          'R1_KGM500_KL500'  :'\nk$_{gm}$=500, k$_{iso}$=500'      , \
+          'R1_KGM2000_KL2000':'\nk$_{gm}$=2e$^3$, k$_{iso}$=2e$^3$', \
           'R9':'', 'R27':''}
     note={'R1'               :'1°', \
           'R1_KL500'         :'1°', \
@@ -2304,7 +2647,7 @@ if plot_sf12 :
         zcf = zax.contourf(X, Y, Z, levels=lev, cmap=cmap, extend=ext)
         ttt='('+subnum.pop()+') '+zsim+' '+ttls[zres]
         plotting.make_YZ_axis(zax, depmax=800, title=ttt)
-        zax.vlines(35, 100, 400, color='k', ls='-', lw=1.)
+        zax.vlines(35, 100, 400, color='k', linestyle='-', linewidth=1.)
         zax.label_outer()
         zax.annotate(note[zres], xy=(23, 700), \
                      bbox=dict(boxstyle="round", fc="1"))
@@ -2343,7 +2686,7 @@ if plot_sf12 :
     fig.colorbar(cf[0,0], cax=cbar_ax, orientation='horizontal', ticklocation='top', label=cbtitle)
 
     for zax in fig.axes : zax.tick_params(color='dimgrey')
-    dirfig='/gpfswork/rech/dyk/rdyk004/MY_FIG_PYTHON3/'
+    dirfig='/gpfswork/rech/eee/rdyk004/MY_FIG_PYTHON3/'
     suffig='main_article_gyre_pp_supfig_v2_'
     fig.savefig(dirfig+suffig+savefig) 
     print("Figure saved: ", dirfig+suffig+savefig)
@@ -2353,4 +2696,3 @@ if plot_sf12 :
 # END SF12
 ##################################################
 
-embed()

@@ -106,9 +106,9 @@ def msf(vv, mesh, dim='tzyx', sigma=None) :
             zws.mask = [x!=1 for x in mask]
         else: raise ValueError("ERROR, zwt doesn't have the right dimension")
         
-        smin, smax, sdel = 23., 25.5, .05
+        smin, smax, sdel = 22., 25.5, .05
         sigv1 = np.arange(smin, smax, sdel)
-        smin, smax, sdel = 25.55, 26.5, .05
+        smin, smax, sdel = 25.55, 26.5, .005
         sigv2 = np.arange(smin, smax, sdel)
         sigv = np.concatenate((sigv1, sigv2))
         sigv[0], sigv[-1] = 0, 100
@@ -165,6 +165,8 @@ def msf(vv, mesh, dim='tzyx', sigma=None) :
 
 def bin_veloc(sig, sigv, xxx, mesh, grid, dim='tzyx') : 
     
+    print("> bin_veloc")
+
     from scipy.interpolate import RegularGridInterpolator, interp1d
 
     # add axis to always have 4 dimensions

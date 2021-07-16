@@ -119,6 +119,7 @@ def read_mesh(meshfile, **kwargs):
     output['depW'  ] =  mesh('gdepw_0', squeeze = 1, **kwargs).getValue()
 
     output['ff'    ] =  mesh('ff'     , squeeze = 1, **kwargs).getValue()
+    output['mbathy'] =  mesh('mbathy' , squeeze = 1, **kwargs).getValue()
 
     output['wmask' ] = output['tmask' ]
     output['latW'  ] = output['latT'  ]
@@ -132,9 +133,9 @@ def read_mesh(meshfile, **kwargs):
     output['depV'  ] = output['depT'  ]
     
     zw = mesh('tmask'  , squeeze = 1).getValue()
-    output['jpi   '] = zw.shape[2]
-    output['jpj   '] = zw.shape[1]
-    output['jpk   '] = zw.shape[0]
+    output['jpi'] = zw.shape[2]
+    output['jpj'] = zw.shape[1]
+    output['jpk'] = zw.shape[0]
     
     return output
 # END read_mesh
